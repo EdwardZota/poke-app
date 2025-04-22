@@ -1,6 +1,9 @@
-import { api } from './client';
+import {api} from './client';
 import {PokemonListResponse} from "./customTypes/PokemonList";
-import {allPokemonDetail} from "./customTypes/SinglePokemonInfo";
+import {
+    allPokemonDetail,
+    lessPokemonDetail
+} from "./customTypes/SinglePokemonInfo";
 
 // get a pokemon list
 export const getPokemonList = async (offset : number, limit : number): Promise<PokemonListResponse> => {
@@ -16,15 +19,31 @@ export const getAllPokemonDetail = async (name: string): Promise<allPokemonDetai
     return response.data;
 };
 
+//get a few single pokemon info
+export const getLessPokemonDetail = async (name: string): Promise<lessPokemonDetail> => {
+    const response = await api.get<lessPokemonDetail>(`pokemon/${name}`);
+    return response.data;
+};
+
+
 //get a pokemon detailed list
-export const getDetailedPokemonList = async (
+export const getAllDetailedPokemonList = async (
     offset : number,
     limit : number,
 ): Promise<allPokemonDetail[]> => {
     const list = await getPokemonList(offset, limit);
-    const details = await Promise.all(
+    return await Promise.all(
         list.results.map((p) => getAllPokemonDetail(p.name))
     );
-    console.log(details);
-    return details;
+};
+
+//get a few pokemon detailed list
+export const getLessDetailedPokemonList = async (
+    offset : number,
+    limit : number,
+): Promise<lessPokemonDetail[]> => {
+    const list = await getPokemonList(offset, limit);
+    return await Promise.all(
+        list.results.map((p) => getLessPokemonDetail(p.name))
+    );
 };
