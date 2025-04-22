@@ -1,7 +1,7 @@
-import PokemonList from "@/app/_components/PokemonList";
+import PokemonItems from "@/app/_components/PokemonItems";
 
 export default function Home() {
   return (
-      <PokemonList />
+      <PokemonItems />
   );
 }
