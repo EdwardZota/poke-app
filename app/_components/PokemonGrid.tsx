@@ -60,7 +60,7 @@ const PokemonGridWithPaginationControls = ({
                     <Select
                         size="small"
                         variant="outlined"
-                        value={pageSize}
+                        value={pageSize.toString()}
                         onChange={handlePageSizeChange}
                     >
                         {[5, 10, 20, 50].map((size) => (

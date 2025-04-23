@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { getLessDetailedPokemonList } from "@/app/_services/pokemonApi";
 import { lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
 import { Button } from "@mui/material";
@@ -16,6 +16,7 @@ const PokemonItems = () => {
     const [hasNextPage, setHasNextPage] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isGridView, setIsGridView] = useState(true);
+    const allPokemonRef = useRef<lessPokemonDetail[] | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,9 +25,15 @@ const PokemonItems = () => {
             const limit = paginationModel.pageSize;
 
             try {
-                const data = await getLessDetailedPokemonList(offset, limit);
-                setPokemon(data);
-                setHasNextPage(data.length === limit);
+                if (allPokemonRef.current) {
+                    const pagedData = allPokemonRef.current.slice(offset, offset + limit);
+                    setPokemon(pagedData);
+                    setHasNextPage(offset + limit < allPokemonRef.current.length);
+                } else {
+                    const data = await getLessDetailedPokemonList(offset, limit);
+                    setPokemon(data);
+                    setHasNextPage(data.length === limit);
+                }
             } catch (error) {
                 console.error(error);
             } finally {
@@ -36,6 +43,28 @@ const PokemonItems = () => {
 
         fetchData();
     }, [paginationModel]);
+
+    useEffect(() => {
+        const prefetchAllPokemon = async () => {
+            const chunkSize = 100;
+            const total = 1500;
+            const all: lessPokemonDetail[] = [];
+
+            for (let offset = 0; offset < total; offset += chunkSize) {
+                try {
+                    const chunk = await getLessDetailedPokemonList(offset, chunkSize);
+                    all.push(...chunk);
+                    allPokemonRef.current = [...all];
+                } catch (e) {
+                    console.error(`Error in the  chunk ${offset}`, e);
+                    break;
+                }
+                await new Promise((r) => setTimeout(r, 50));
+            }
+        };
+
+        prefetchAllPokemon();
+    }, []);
 
     return (
         <div>

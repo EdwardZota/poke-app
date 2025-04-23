@@ -5,7 +5,7 @@ export type allPokemonDetail = {
     weight: number;
     order: number;
     sprites: pokemonSprites;
-    species: pokemonSpecies[];
+    species: pokemonSpecies;
     types: pokemonTyps[];
     abilities: pokemonAbilities[];
     game_indices: pokemonGameIndex[];
@@ -29,7 +29,7 @@ export type muchPokemonDetail = {
     weight: number;
     order: number;
     sprites: pokemonSprites;
-    species: pokemonSpecies[];
+    species: pokemonSpecies;
     types: pokemonTyps[];
 
 }
