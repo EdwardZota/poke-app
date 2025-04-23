@@ -4,17 +4,24 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import PokemonImage from '@/app/pictures/PokemonImage.png';
+import PokemonImage from '@/app/_pictures/PokemonImage.png';
 import NavbarImage from "./NavbarImage";
 import ResponsiveNavbar from "./ResponsiveNavbar";
-import NavbarPages from "./NavbarPages";
 import DarkLightSwitch from "./DarkLightSwitch";
 import LanguageSelector from "./LanguageSelector";
 
+interface NavbarProps {
+    handleChange: () => void;
+    mode: boolean;
+}
 
-function ResponsiveAppBar() {
-
-    const pages = ['Sammlung', 'Vergleich'];
+function ResponsiveAppBar({ handleChange, mode }: NavbarProps) {
+    const pages = [
+        { name: 'Pokémon', url: '/' },
+        { name: 'Vergleich', url: '/comparison' },
+        { name: 'Beeren', url: '/berry' },
+        { name: 'Artikel', url: '/item' }
+    ];
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
@@ -23,24 +30,29 @@ function ResponsiveAppBar() {
     };
 
     return (
-        <header style={{height: "80px"}}>
-            <AppBar position="static">
-                <Container maxWidth="xl" style={{margin: '0rem'}}>
-                    <Toolbar disableGutters>
-                        <NavbarImage imageSrc={PokemonImage} height={50}
-                                     altText={"Pokemon Image"} linkUrl={"/"}/>
-                        <ResponsiveNavbar pages={pages}
-                                          setAnchorElNav={setAnchorElNav}
-                                          anchorElNav={anchorElNav}/>
-                        <NavbarPages pages={pages}
-                                     handleCloseNavMenu={handleCloseNavMenu}/>
-                        <LanguageSelector/>
-                        <DarkLightSwitch/>
-                    </Toolbar>
-                </Container>
-            </AppBar>
-
-        </header>
+        <AppBar position="static">
+            <Container
+                maxWidth={false}
+                sx={{ margin: '0px', width: "100%" }}
+                className="dlfsadkjfghoisdfokjsdfhgfpolifdsjgopkfsdgh ofsdkhgdsafuoigfzhsdaoifugfhzfdsoiughffdsoigf hreasoughri9o"
+            >
+                <Toolbar disableGutters>
+                    <NavbarImage
+                        imageSrc={PokemonImage}
+                        height={50}
+                        altText={"Pokemon Image"}
+                        linkUrl={pages[0].url}
+                    />
+                    <ResponsiveNavbar
+                        pages={pages}
+                        setAnchorElNav={setAnchorElNav}
+                        anchorElNav={anchorElNav}
+                    />
+                    <LanguageSelector />
+                    <DarkLightSwitch handleChange={handleChange} mode={mode} />
+                </Toolbar>
+            </Container>
+        </AppBar>
     );
 }
 

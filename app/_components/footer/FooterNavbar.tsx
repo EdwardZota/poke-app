@@ -9,19 +9,17 @@ import Button from "@mui/material/Button";
 function FooterNavbar() {
 
     return (
-        <footer style={{height: "80px"}}>
-            <AppBar position="static"  style={{height: "100%"}}>
-                <Container maxWidth="xl" style={{margin: '0rem',height: "100%"}}>
-                    <Toolbar disableGutters style={{width: '100vw'}}>
-                        <Button variant="text" sx={{
-                            color: "white",
-                            fontSize: "1.25rem",
-                            marginLeft: "2rem"
-                        }}>Impressum</Button>
-                    </Toolbar>
-                </Container>
-            </AppBar>
-        </footer>
+        <AppBar component="footer" position="static" sx={{height: "80px", width: "100%"}}>
+            <Container maxWidth={false} sx={{margin: '0rem', height: '100%', width: '100%'}}>
+                <Toolbar disableGutters sx={{padding: "0px", height: "100%", width: '100%'}}>
+                    <Button variant="text" sx={{
+                        color: "white",
+                        fontSize: "1.25rem",
+                        marginLeft: "3rem"
+                    }}>Impressum</Button>
+                </Toolbar>
+            </Container>
+        </AppBar>
     );
 }
 

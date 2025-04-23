@@ -1,6 +1,7 @@
 import {api} from './client';
 import {ListResponse} from "./customTypes/PokemonList";
 import {
+    AbilityDetail,
     allPokemonDetail,
     lessPokemonDetail,
     pokemonEvolution
@@ -51,6 +52,12 @@ export const getLessDetailedPokemonList = async (
         list.results.map((p) => getLessPokemonDetail(p.name))
     );
 };
+
+//get ability info
+export const getAbilityInfo = async (abilityId: number): Promise<AbilityDetail> => {
+    const response = await api.get<AbilityDetail>(`ability/${abilityId}`);
+    return response.data;
+}
 
 //get single pokemon evolution
 export const getPokemonEvolution = async (

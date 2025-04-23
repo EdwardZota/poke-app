@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 type ResponsiveNavbarProps = {
-    pages: string[];
+    pages: { name: string, url: string }[];
     setAnchorElNav: React.Dispatch<React.SetStateAction<null | HTMLElement>>;
     anchorElNav: null | HTMLElement;
 };
@@ -62,8 +62,8 @@ function ResponsiveNavbar({pages, setAnchorElNav, anchorElNav}: ResponsiveNavbar
                 }}
             >
                 {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                        <Typography sx={{textAlign: 'center'}}>{page}</Typography>
+                    <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                        <Typography sx={{textAlign: 'center'}}>{page.name}</Typography>
                     </MenuItem>
                 ))}
             </Menu>

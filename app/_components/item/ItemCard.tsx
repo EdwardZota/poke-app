@@ -1,7 +1,7 @@
 import React from "react";
 import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
 import Link from "next/link";
-import ImageNotAvailable from "@/app/pictures/ImageNotAvailable.png";
+import ImageNotAvailable from "@/app/_pictures/ImageNotAvailable.png";
 
 type Props = {
     item: itemDetails;

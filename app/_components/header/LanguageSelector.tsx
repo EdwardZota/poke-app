@@ -10,8 +10,8 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Image from 'next/image';
-import GermanFlag from '@/app/pictures/germanFlag.png';
-import EnglishFlag from '@/app/pictures/englishFlag.png';
+import GermanFlag from '@/app/_pictures/germanFlag.png';
+import EnglishFlag from '@/app/_pictures/englishFlag.png';
 
 const options = [
     { label: 'Deutsch', flag: GermanFlag },
