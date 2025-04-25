@@ -1,6 +1,7 @@
 import React from "react";
 import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
 import Link from "next/link";
+import ImageNotAvailable from "@/app/pictures/ImageNotAvailable.png"
 
 type Props = {
     pokemon: lessPokemonDetail;
@@ -11,7 +12,7 @@ const PokemonCard = ({ pokemon }: Props) => {
         <Link href={`/pokemon/${pokemon.name}`}>
             <div className="bg-white rounded-2xl shadow-md p-4 text-center">
                 <img
-                    src={pokemon.sprites.other.dream_world.front_default}
+                    src={pokemon.sprites.other.dream_world.front_default || ImageNotAvailable.src}
                     alt={pokemon.name}
                     className="w-32 h-32 mx-auto"
                 />

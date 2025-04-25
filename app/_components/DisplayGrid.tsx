@@ -10,10 +10,14 @@ import {
     SelectChangeEvent
 } from "@mui/material";
 import { lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
-import PokemonCard from "@/app/_components/PokemonCard";
+import PokemonCard from "@/app/_components/pokemon/PokemonCard";
+import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
+import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
+import BerryCard from "@/app/_components/berry/BerryCard";
+import ItemCard from "@/app/_components/item/ItemCard";
 
 type Props = {
-    pokemonList: lessPokemonDetail[];
+    elements: lessPokemonDetail[] | berryDetails[] | itemDetails[];
     paginationModel: {
         page: number;
         pageSize: number;
@@ -24,7 +28,7 @@ type Props = {
 };
 
 const PokemonGridWithPaginationControls = ({
-   pokemonList,
+   elements,
    paginationModel,
    onPaginationModelChange,
    hasNextPage,
@@ -47,6 +51,19 @@ const PokemonGridWithPaginationControls = ({
     const handlePageSizeChange = (event: SelectChangeEvent) => {
         onPaginationModelChange({ page: 0, pageSize: Number(event.target.value) });
     };
+
+    function isPokemon(el: unknown): el is lessPokemonDetail {
+        return !!el && typeof el === "object" && "height" in el && "weight" in el;
+    }
+
+    function isBerry(el: unknown): el is berryDetails {
+        return !!el && typeof el === "object" && "flavors" in el;
+    }
+
+    function isItem(el: unknown): el is itemDetails {
+        return !!el && typeof el === "object" && "cost" in el;
+    }
+
 
     return (
         <div className="p-4">
@@ -76,9 +93,18 @@ const PokemonGridWithPaginationControls = ({
                 <Typography>Loading...</Typography>
             ) : (
                 <Grid container spacing={2} justifyContent="center">
-                    {pokemonList.map((pokemon) => (
-                        <PokemonCard key={pokemon.id} pokemon={pokemon} />
-                    ))}
+                    {elements.map((element) => {
+                        if (isPokemon(element)) {
+                            return <PokemonCard key={element.id} pokemon={element} />;
+                        }
+                        if (isBerry(element)) {
+                            return <BerryCard key={element.id} berry={element} />;
+                        }
+                        if (isItem(element)) {
+                            return <ItemCard key={element.id} item={element} />;
+                        }
+                        return null;
+                    })}
                 </Grid>
             )}
 

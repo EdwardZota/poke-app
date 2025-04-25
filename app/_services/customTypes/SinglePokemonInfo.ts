@@ -1,3 +1,5 @@
+import {NameAndUrl} from "@/app/_services/customTypes/NameAndUrl";
+
 export type allPokemonDetail = {
     id: number;
     name: string;
@@ -5,7 +7,7 @@ export type allPokemonDetail = {
     weight: number;
     order: number;
     sprites: pokemonSprites;
-    species: pokemonSpecies;
+    species: NameAndUrl;
     types: pokemonTyps[];
     abilities: pokemonAbilities[];
     game_indices: pokemonGameIndex[];
@@ -29,24 +31,18 @@ export type muchPokemonDetail = {
     weight: number;
     order: number;
     sprites: pokemonSprites;
-    species: pokemonSpecies;
+    species: NameAndUrl;
     types: pokemonTyps[];
 
 }
 
 export type pokemonAbilities = {
-    ability: {
-        name: string; // "limber"
-        url: string; //"https://pokeapi.co/api/v2/ability/7/"
-    };
+    ability: NameAndUrl
 }
 
 export type pokemonGameIndex = {
     game_index: number;
-    version: {
-        name: string; //"red"
-        url: string; //"https://pokeapi.co/api/v2/version/2/"
-    }
+    version: NameAndUrl
 }
 
 export type pokemonTyps = {
@@ -55,18 +51,11 @@ export type pokemonTyps = {
     };
 }
 
-export type pokemonSpecies = {
-    name:string;
-    url: string; // "https://pokeapi.co/api/v2/pokemon-species/132/"
-}
 
 export type pokemonStats = {
     base_stat: number;
     effort: number;
-    stat: {
-        name: string; // hp
-        url: string; // "https://pokeapi.co/api/v2/stat/1/"
-    }
+    stat: NameAndUrl
 }
 
 export type pokemonSprites = {  // svg picture
