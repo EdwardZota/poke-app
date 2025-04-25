@@ -1,5 +1,5 @@
 import { getAllPokemonDetail } from "@/app/_services/pokemonApi";
-import PokemonDetail from "@/app/_components/PokemonDetail";
+import PokemonDetail from "@/app/_components/pokemon/PokemonDetail";
 import {allPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
 
 type Params = Promise<{ name: string }>

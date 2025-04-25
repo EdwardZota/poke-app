@@ -1,14 +1,16 @@
 "use client";
 
 import React, {useEffect, useRef, useState} from "react";
-import { getLessDetailedPokemonList } from "@/app/_services/pokemonApi";
-import { lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
 import { Button } from "@mui/material";
-import ListedElements from "@/app/_components/ListedElements";
-import PokemonGrid from "@/app/_components/PokemonGrid";
+import DisplayList from "@/app/_components/DisplayList";
+import PokemonGrid from "@/app/_components/DisplayGrid";
+import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
+import {
+    getAllDetailedBerryList,
+} from "@/app/_services/berryApi";
 
 const PokemonItems = () => {
-    const [pokemon, setPokemon] = useState<lessPokemonDetail[]>([]);
+    const [berry, setBerry] = useState<berryDetails[]>([]);
     const [paginationModel, setPaginationModel] = useState({
         page: 0,
         pageSize: 5,
@@ -16,7 +18,7 @@ const PokemonItems = () => {
     const [hasNextPage, setHasNextPage] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isGridView, setIsGridView] = useState(true);
-    const allPokemonRef = useRef<lessPokemonDetail[] | null>(null);
+    const allBerryRef = useRef<berryDetails[] | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,13 +27,13 @@ const PokemonItems = () => {
             const limit = paginationModel.pageSize;
 
             try {
-                if (allPokemonRef.current) {
-                    const pagedData = allPokemonRef.current.slice(offset, offset + limit);
-                    setPokemon(pagedData);
-                    setHasNextPage(offset + limit < allPokemonRef.current.length);
+                if (allBerryRef.current) {
+                    const pagedData = allBerryRef.current.slice(offset, offset + limit);
+                    setBerry(pagedData);
+                    setHasNextPage(offset + limit < allBerryRef.current.length);
                 } else {
-                    const data = await getLessDetailedPokemonList(offset, limit);
-                    setPokemon(data);
+                    const data = await getAllDetailedBerryList(offset, limit);
+                    setBerry(data);
                     setHasNextPage(data.length === limit);
                 }
             } catch (error) {
@@ -45,16 +47,16 @@ const PokemonItems = () => {
     }, [paginationModel]);
 
     useEffect(() => {
-        const prefetchAllPokemon = async () => {
+        const prefetchAllBerry = async () => {
             const chunkSize = 100;
-            const total = 1500;
-            const all: lessPokemonDetail[] = [];
+            const total = 100;
+            const all: berryDetails[] = [];
 
             for (let offset = 0; offset < total; offset += chunkSize) {
                 try {
-                    const chunk = await getLessDetailedPokemonList(offset, chunkSize);
+                    const chunk = await getAllDetailedBerryList(offset, chunkSize);
                     all.push(...chunk);
-                    allPokemonRef.current = [...all];
+                    allBerryRef.current = [...all];
                 } catch (e) {
                     console.error(`Error in the  chunk ${offset}`, e);
                     break;
@@ -63,7 +65,7 @@ const PokemonItems = () => {
             }
         };
 
-        prefetchAllPokemon();
+        prefetchAllBerry();
     }, []);
 
     return (
@@ -79,15 +81,15 @@ const PokemonItems = () => {
 
             {isGridView ? (
                 <PokemonGrid
-                    pokemonList={pokemon}
+                    elements={berry}
                     paginationModel={paginationModel}
                     onPaginationModelChange={setPaginationModel}
                     hasNextPage={hasNextPage}
                     isLoading={isLoading}
                 />
             ) : (
-                <ListedElements
-                    rows={pokemon}
+                <DisplayList
+                    elements={berry}
                     paginationModel={paginationModel}
                     onPaginationModelChange={setPaginationModel}
                     hasNextPage={hasNextPage}
