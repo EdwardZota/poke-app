@@ -8,6 +8,8 @@ import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
 import {
     getAllDetailedBerryList,
 } from "@/app/_services/berryApi";
+import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
+import SearchBar from "@/app/_components/SearchBar";
 
 const PokemonItems = () => {
     const [berry, setBerry] = useState<berryDetails[]>([]);
@@ -18,6 +20,7 @@ const PokemonItems = () => {
     const [hasNextPage, setHasNextPage] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isGridView, setIsGridView] = useState(true);
+    const [allBerry, setAllBerry] = useState<berryDetails[]>([]);
     const allBerryRef = useRef<berryDetails[] | null>(null);
 
     useEffect(() => {
@@ -57,6 +60,7 @@ const PokemonItems = () => {
                     const chunk = await getAllDetailedBerryList(offset, chunkSize);
                     all.push(...chunk);
                     allBerryRef.current = [...all];
+                    setAllBerry(all)
                 } catch (e) {
                     console.error(`Error in the  chunk ${offset}`, e);
                     break;
@@ -78,7 +82,7 @@ const PokemonItems = () => {
             >
                 Toggle View
             </Button>
-
+            <SearchBar allElements={allBerry} typology={"berry"}/>
             {isGridView ? (
                 <PokemonGrid
                     elements={berry}

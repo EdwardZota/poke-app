@@ -1,11 +1,12 @@
 "use client";
 
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getLessDetailedPokemonList } from "@/app/_services/pokemonApi";
 import { lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
 import { Button } from "@mui/material";
 import DisplayList from "@/app/_components/DisplayList";
 import PokemonGrid from "@/app/_components/DisplayGrid";
+import SearchBar from "@/app/_components/SearchBar";
 
 const PokemonItems = () => {
     const [pokemon, setPokemon] = useState<lessPokemonDetail[]>([]);
@@ -16,7 +17,9 @@ const PokemonItems = () => {
     const [hasNextPage, setHasNextPage] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isGridView, setIsGridView] = useState(true);
-    const allPokemonRef = useRef<lessPokemonDetail[] | null>(null);
+
+    const [allPokemon, setAllPokemon] = useState<lessPokemonDetail[]>([]);
+    const allPokemonRef = useRef<lessPokemonDetail[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,7 +28,7 @@ const PokemonItems = () => {
             const limit = paginationModel.pageSize;
 
             try {
-                if (allPokemonRef.current) {
+                if (allPokemonRef.current.length !== 0) {
                     const pagedData = allPokemonRef.current.slice(offset, offset + limit);
                     setPokemon(pagedData);
                     setHasNextPage(offset + limit < allPokemonRef.current.length);
@@ -55,8 +58,9 @@ const PokemonItems = () => {
                     const chunk = await getLessDetailedPokemonList(offset, chunkSize);
                     all.push(...chunk);
                     allPokemonRef.current = [...all];
+                    setAllPokemon(all);
                 } catch (e) {
-                    console.error(`Error in the  chunk ${offset}`, e);
+                    console.error(`Error in the chunk ${offset}`, e);
                     break;
                 }
                 await new Promise((r) => setTimeout(r, 50));
@@ -76,7 +80,7 @@ const PokemonItems = () => {
             >
                 Toggle View
             </Button>
-
+            <SearchBar allElements={allPokemon} typology={"pokemon"}/>
             {isGridView ? (
                 <PokemonGrid
                     elements={pokemon}
