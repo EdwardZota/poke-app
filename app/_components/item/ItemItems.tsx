@@ -7,7 +7,6 @@ import DisplayGrid from "@/app/_components/DisplayGrid";
 import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
 import {getAllDetailedItemList} from "@/app/_services/ItemApi";
 import SearchBar from "@/app/_components/SearchBar";
-import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
 
 const PokemonItems = () => {
     const [item, setItem] = useState<itemDetails[]>([]);

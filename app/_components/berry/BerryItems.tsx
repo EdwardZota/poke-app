@@ -8,7 +8,6 @@ import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
 import {
     getAllDetailedBerryList,
 } from "@/app/_services/berryApi";
-import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
 import SearchBar from "@/app/_components/SearchBar";
 
 const PokemonItems = () => {

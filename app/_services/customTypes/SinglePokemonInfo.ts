@@ -21,6 +21,7 @@ export type lessPokemonDetail = {
     weight: number;
     order: number;
     sprites: pokemonSprites;
+    types: pokemonTyps[];
 
 }
 

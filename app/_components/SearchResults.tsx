@@ -1,6 +1,6 @@
 import React from 'react';
 import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
-import {Card, CardContent, Typography} from '@mui/material';
+import {Typography} from '@mui/material';
 import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
 import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
 import Link from "next/link";
