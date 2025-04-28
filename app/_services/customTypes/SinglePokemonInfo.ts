@@ -1,4 +1,4 @@
-import {NameAndUrl} from "@/app/_services/customTypes/NameAndUrl";
+import {nameAndUrl} from "@/app/_services/customTypes/nameAndUrl";
 
 export type allPokemonDetail = {
     id: number;
@@ -7,7 +7,7 @@ export type allPokemonDetail = {
     weight: number;
     order: number;
     sprites: pokemonSprites;
-    species: NameAndUrl;
+    species: nameAndUrl;
     types: pokemonTyps[];
     abilities: pokemonAbilities[];
     game_indices: pokemonGameIndex[];
@@ -22,7 +22,6 @@ export type lessPokemonDetail = {
     order: number;
     sprites: pokemonSprites;
     types: pokemonTyps[];
-
 }
 
 export type muchPokemonDetail = {
@@ -32,18 +31,18 @@ export type muchPokemonDetail = {
     weight: number;
     order: number;
     sprites: pokemonSprites;
-    species: NameAndUrl;
+    species: nameAndUrl;
     types: pokemonTyps[];
 
 }
 
 export type pokemonAbilities = {
-    ability: NameAndUrl
+    ability: nameAndUrl
 }
 
 export type pokemonGameIndex = {
     game_index: number;
-    version: NameAndUrl
+    version: nameAndUrl
 }
 
 export type pokemonTyps = {
@@ -56,7 +55,7 @@ export type pokemonTyps = {
 export type pokemonStats = {
     base_stat: number;
     effort: number;
-    stat: NameAndUrl
+    stat: nameAndUrl
 }
 
 export type pokemonSprites = {  // svg picture
@@ -67,3 +66,14 @@ export type pokemonSprites = {  // svg picture
         }
     }
 }
+
+//evolution
+export type evolutionChain = {
+    evolves_to: evolutionChain[];
+    species: nameAndUrl;
+};
+
+export type pokemonEvolution = {
+    id: number;
+    chain: evolutionChain;
+};

@@ -1,13 +1,13 @@
-import {NameAndUrl} from "@/app/_services/customTypes/NameAndUrl";
+import {nameAndUrl} from "@/app/_services/customTypes/nameAndUrl";
 
 export type itemDetails = {
     id: number;
     name: string;
     cost: number;
     fling_power: number;
-    fling_effect: NameAndUrl;
-    attributes: NameAndUrl[];
-    category: NameAndUrl;
+    fling_effect: nameAndUrl;
+    attributes: nameAndUrl[];
+    category: nameAndUrl;
     effect_entries: ItemEffectEntry[];
     flavor_text_entries: ItemFlavorTextEntry[];
     game_indices: ItemGameIndex[];
@@ -17,35 +17,35 @@ export type itemDetails = {
 };
 
 export type HeldByPokemon = {
-    pokemon: NameAndUrl;
+    pokemon: nameAndUrl;
     version_details: VersionDetails[];
 }
 
 export type VersionDetails = {
     rarity: number;
-    version: NameAndUrl;
+    version: nameAndUrl;
 }
 
 export type ItemEffectEntry = {
     effect: string;
     short_effect: string;
-    language: NameAndUrl;
+    language: nameAndUrl;
 };
 
 export type ItemFlavorTextEntry = {
     text: string;
-    language: NameAndUrl;
-    version_group: NameAndUrl;
+    language: nameAndUrl;
+    version_group: nameAndUrl;
 };
 
 export type ItemGameIndex = {
     game_index: number;
-    generation: NameAndUrl;
+    generation: nameAndUrl;
 };
 
 export type ItemName = {
     name: string;
-    language: NameAndUrl;
+    language: nameAndUrl;
 };
 
 export type ItemSprites = {

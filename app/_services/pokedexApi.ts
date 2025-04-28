@@ -1,6 +1,6 @@
 import {api} from './client';
 import {ListResponse} from "@/app/_services/customTypes/PokemonList";
-import {NameAndUrl} from "@/app/_services/customTypes/NameAndUrl";
+import {nameAndUrl} from "@/app/_services/customTypes/nameAndUrl";
 
 
 const resource = 'pokedex';
@@ -9,5 +9,5 @@ const resource = 'pokedex';
 // get pokedex list
 export const getPokedexList = async () => {
     const response = await api.get<ListResponse>(resource);
-    return response.data.results.map((pokedex: NameAndUrl) => pokedex.name);
+    return response.data.results.map((pokedex: nameAndUrl) => pokedex.name);
 };

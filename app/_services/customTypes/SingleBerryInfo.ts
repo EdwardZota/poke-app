@@ -1,4 +1,4 @@
-import {NameAndUrl} from "@/app/_services/customTypes/NameAndUrl";
+import {nameAndUrl} from "@/app/_services/customTypes/nameAndUrl";
 
 export type berryDetails = {
     id: number;
@@ -9,14 +9,14 @@ export type berryDetails = {
     size: number;
     smoothness: number;
     soil_dryness: number;
-    firmness: NameAndUrl;
+    firmness: nameAndUrl;
     flavors: BerryFlavor[];
-    item: NameAndUrl;
-    natural_gift_type: NameAndUrl;
+    item: nameAndUrl;
+    natural_gift_type: nameAndUrl;
 };
 
 
 export type BerryFlavor = {
     potency: number;
-    flavor: NameAndUrl
+    flavor: nameAndUrl
 };
