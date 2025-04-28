@@ -17,7 +17,7 @@ import BerryCard from "@/app/_components/berry/BerryCard";
 import ItemCard from "@/app/_components/item/ItemCard";
 
 type Props = {
-    elements: lessPokemonDetail[] | berryDetails[] | itemDetails[];
+    elements: (lessPokemonDetail | berryDetails | itemDetails)[];
     paginationModel: {
         page: number;
         pageSize: number;
@@ -27,7 +27,7 @@ type Props = {
     isLoading: boolean;
 };
 
-const PokemonGridWithPaginationControls = ({
+const DisplayGrid = ({
    elements,
    paginationModel,
    onPaginationModelChange,
@@ -123,4 +123,4 @@ const PokemonGridWithPaginationControls = ({
     );
 };
 
-export default PokemonGridWithPaginationControls;
+export default DisplayGrid;

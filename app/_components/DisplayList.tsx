@@ -9,7 +9,7 @@ import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
 import ImageNotAvailable from "@/app/pictures/ImageNotAvailable.png";
 
 interface ListedElementsProps {
-    elements: lessPokemonDetail[] | berryDetails[] | itemDetails[];
+    elements: (lessPokemonDetail | berryDetails | itemDetails)[];
     paginationModel: {
         page: number;
         pageSize: number;
@@ -125,6 +125,7 @@ const DisplayList = ({
                 rowHeight={175}
                 loading={isLoading}
                 disableColumnSorting
+                disableColumnMenu
                 sx={{border: 0}}
             />
         </div>

@@ -5,7 +5,6 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import PokemonImage from '@/app/pictures/PokemonImage.png';
-import Searchbar from "./Searchbar";
 import NavbarImage from "./NavbarImage";
 import ResponsiveNavbar from "./ResponsiveNavbar";
 import NavbarPages from "./NavbarPages";
@@ -35,7 +34,6 @@ function ResponsiveAppBar() {
                                           anchorElNav={anchorElNav}/>
                         <NavbarPages pages={pages}
                                      handleCloseNavMenu={handleCloseNavMenu}/>
-                        <Searchbar/>
                         <LanguageSelector/>
                         <DarkLightSwitch/>
                     </Toolbar>

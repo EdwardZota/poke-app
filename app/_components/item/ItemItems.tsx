@@ -6,6 +6,7 @@ import DisplayList from "@/app/_components/DisplayList";
 import DisplayGrid from "@/app/_components/DisplayGrid";
 import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
 import {getAllDetailedItemList} from "@/app/_services/ItemApi";
+import SearchBar from "@/app/_components/SearchBar";
 
 const PokemonItems = () => {
     const [item, setItem] = useState<itemDetails[]>([]);
@@ -16,6 +17,7 @@ const PokemonItems = () => {
     const [hasNextPage, setHasNextPage] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isGridView, setIsGridView] = useState(true);
+    const [allItem, setAllItem] = useState<itemDetails[]>([]);
     const allBerryRef = useRef<itemDetails[] | null>(null);
 
     useEffect(() => {
@@ -55,6 +57,7 @@ const PokemonItems = () => {
                     const chunk = await getAllDetailedItemList(offset, chunkSize);
                     all.push(...chunk);
                     allBerryRef.current = [...all];
+                    setAllItem(all)
                 } catch (e) {
                     console.error(`Error in the  chunk ${offset}`, e);
                     break;
@@ -77,6 +80,7 @@ const PokemonItems = () => {
                 Toggle View
             </Button>
 
+            <SearchBar allElements={allItem} typology={"item"}/>
             {isGridView ? (
                 <DisplayGrid
                     elements={item}
