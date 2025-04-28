@@ -7,13 +7,51 @@ import {
     ListItem,
     ListItemText
 } from '@mui/material';
-import {allPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
+import {
+    allPokemonDetail,
+} from "@/app/_services/customTypes/SinglePokemonInfo";
+import {
+    getLessPokemonDetail,
+    getPokemonEvolution
+} from "@/app/_services/pokemonApi";
+import {useEffect, useState} from "react";
+import {nameAndUrl} from "@/app/_services/customTypes/nameAndUrl";
+import ImageNotAvailable from "@/app/pictures/ImageNotAvailable.png"
 
 type Props = {
     pokemon: allPokemonDetail;
 };
 
 export default function PokemonDetail({pokemon}: Props) {
+    const [namePics, setNamePics] = useState<nameAndUrl[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const pokemonEvo = await getPokemonEvolution(pokemon.name);
+
+            const extractNames = (chain: any): string[] =>
+                [chain.species.name, ...chain.evolves_to.flatMap((e: any) => extractNames(e))];
+
+            const names = extractNames(pokemonEvo.data.chain);
+
+            const pics = await Promise.all(
+                names.map(async (name: string) => {
+                    const pokemonInfo = await getLessPokemonDetail(name);
+                    return {
+                        name: name,
+                        url: pokemonInfo.sprites.other.dream_world.front_default
+                    };
+                })
+            );
+
+            setNamePics(pics);
+        };
+
+        fetchData();
+    }, [pokemon.name]);
+
+    console.log(namePics);
+
     return (
         <div className="max-w-4xl mx-auto p-6 mt-10">
             <Typography variant="h3" component="h1"
@@ -68,7 +106,7 @@ export default function PokemonDetail({pokemon}: Props) {
                     <Typography variant="h6" className="font-semibold mt-4">Game
                         Indices</Typography>
                     <Typography variant="body1">
-                        {pokemon.game_indices.map((g ) => g.version.name).join(', ')}
+                        {pokemon.game_indices.map((g) => g.version.name).join(', ')}
                     </Typography>
 
                     <Typography variant="h6"
@@ -79,6 +117,23 @@ export default function PokemonDetail({pokemon}: Props) {
                                 <ListItemText
                                     primary={`${s.stat.name}: ${s.base_stat} (Effort: ${s.effort})`}/>
                             </ListItem>
+                        ))}
+                    </List>
+
+                    <Typography variant="h4">
+                        Evolutions
+                    </Typography>
+                    <List>
+                        {namePics.map(({ name, url }) => (
+                            <div key={name}
+                                 className="flex items-center space-x-4 my-2">
+                                <img src={url || ImageNotAvailable.src} alt={name}
+                                     className="h-20 w-20 object-contain"/>
+                                <Typography variant="body1"
+                                            className="capitalize">
+                                    {name}
+                                </Typography>
+                            </div>
                         ))}
                     </List>
                 </div>

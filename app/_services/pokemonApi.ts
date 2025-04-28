@@ -2,7 +2,8 @@ import {api} from './client';
 import {ListResponse} from "./customTypes/PokemonList";
 import {
     allPokemonDetail,
-    lessPokemonDetail
+    lessPokemonDetail,
+    pokemonEvolution
 } from "./customTypes/SinglePokemonInfo";
 
 const resource = 'pokemon';
@@ -50,3 +51,27 @@ export const getLessDetailedPokemonList = async (
         list.results.map((p) => getLessPokemonDetail(p.name))
     );
 };
+
+//get single pokemon evolution
+export const getPokemonEvolution = async (
+    name : string,
+): Promise<any> => {
+    const pokemonSpecies = await getSpecies(name);
+    const idEvolution = extractIdFromUrl(pokemonSpecies.evolution_chain.url);
+    return api.get<pokemonEvolution>(`evolution-chain/${idEvolution}`)
+};
+
+//get pokemon species
+export const getSpecies = async (name: string): Promise<any> => {
+    const response = await api.get<any>(`${resource}-species/${name}`);
+    return response.data;
+};
+
+
+function extractIdFromUrl(url: string): number {
+    const matches = url.match(/\/(\d+)\/$/);
+    if (matches) {
+        return parseInt(matches[1], 10);
+    }
+    return -1;
+}

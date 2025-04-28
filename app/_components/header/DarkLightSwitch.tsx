@@ -2,27 +2,25 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { styled } from '@mui/system';
-import { useSwitch, UseSwitchParameters } from '@mui/base/useSwitch';
+
 
 export default function DarkLightSwitch() {
-    return <MUISwitch defaultChecked/>;
+    return <MUISwitch defaultChecked />;
 }
 
-function MUISwitch(props: UseSwitchParameters) {
-    const { getInputProps, checked, disabled, focusVisible } = useSwitch(props);
+function MUISwitch(props: any) {
+    const [checked, setChecked] = React.useState(props.defaultChecked);
 
-    const stateClasses = {
-        checked,
-        disabled,
-        focusVisible,
+    const handleToggle = () => {
+        setChecked(!checked);
     };
 
     return (
-        <SwitchRoot className={clsx(stateClasses)} style={{marginRight: "3rem"}}>
+        <SwitchRoot>
+            <SwitchInput type="checkbox" checked={checked} onChange={handleToggle} />
             <SwitchTrack>
-                <SwitchThumb className={clsx(stateClasses)} />
+                <SwitchThumb className={clsx(checked && 'checked')} />
             </SwitchTrack>
-            <SwitchInput {...getInputProps()} aria-label="Demo switch" />
         </SwitchRoot>
     );
 }
