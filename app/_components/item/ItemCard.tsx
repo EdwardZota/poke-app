@@ -1,7 +1,7 @@
 import React from "react";
 import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
 import Link from "next/link";
-import ImageNotAvailable from "@/app/_pictures/ImageNotAvailable.png";
+import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png"
 
 type Props = {
     item: itemDetails;
@@ -13,7 +13,7 @@ const ItemCard = ({ item }: Props) => {
             <div className="bg-white rounded-2xl shadow-md p-4 text-center">
                 {item.sprites?.default && (
                     <img
-                        src={item.sprites.default || ImageNotAvailable.src}
+                        src={item.sprites.default || missingNo.src}
                         alt={item.name}
                         className="w-20 h-20 mx-auto"
                     />

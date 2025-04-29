@@ -22,7 +22,6 @@ export type lessPokemonDetail = {
     stats: pokemonStats[];
     types: pokemonTypes[];
     abilities: pokemonAbilities[];
-    types: pokemonTyps[];
 }
 
 export type muchPokemonDetail = {
@@ -68,7 +67,6 @@ export type pokemonSprites = {
     }
 }
 
-//evolution
 export type evolutionChain = {
     evolves_to: evolutionChain[];
     species: nameAndUrl;
@@ -79,7 +77,6 @@ export type pokemonEvolution = {
     chain: evolutionChain;
 };
 
-// ability
 export type AbilityDetail = {
     id: number;
     name: string;
