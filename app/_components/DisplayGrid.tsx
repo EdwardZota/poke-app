@@ -92,7 +92,7 @@ const DisplayGrid = ({
             {isLoading ? (
                 <Typography>Loading...</Typography>
             ) : (
-                <Grid container spacing={2} justifyContent="center">
+                <Grid container spacing={5} justifyContent="center">
                     {elements.map((element) => {
                         if (isPokemon(element)) {
                             return <PokemonCard key={element.id} pokemon={element} />;

@@ -6,7 +6,7 @@ import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
 import {useRouter} from 'next/navigation';
 import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
 import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
-import ImageNotAvailable from "@/app/pictures/ImageNotAvailable.png";
+import ImageNotAvailable from "@/app/_pictures/ImageNotAvailable.png";
 
 interface ListedElementsProps {
     elements: (lessPokemonDetail | berryDetails | itemDetails)[];

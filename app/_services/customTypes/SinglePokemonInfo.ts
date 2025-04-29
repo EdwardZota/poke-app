@@ -8,7 +8,7 @@ export type allPokemonDetail = {
     order: number;
     sprites: pokemonSprites;
     species: nameAndUrl;
-    types: pokemonTyps[];
+    types: pokemonTypes[];
     abilities: pokemonAbilities[];
     game_indices: pokemonGameIndex[];
     stats: pokemonStats[];
@@ -17,10 +17,11 @@ export type allPokemonDetail = {
 export type lessPokemonDetail = {
     id: number;
     name: string;
-    height: number;
-    weight: number;
     order: number;
     sprites: pokemonSprites;
+    stats: pokemonStats[];
+    types: pokemonTypes[];
+    abilities: pokemonAbilities[];
     types: pokemonTyps[];
 }
 
@@ -32,7 +33,7 @@ export type muchPokemonDetail = {
     order: number;
     sprites: pokemonSprites;
     species: nameAndUrl;
-    types: pokemonTyps[];
+    types: pokemonTypes[];
 
 }
 
@@ -45,7 +46,7 @@ export type pokemonGameIndex = {
     version: nameAndUrl
 }
 
-export type pokemonTyps = {
+export type pokemonTypes = {
     type: {
         name: string;
     };
@@ -58,7 +59,7 @@ export type pokemonStats = {
     stat: nameAndUrl
 }
 
-export type pokemonSprites = {  // svg picture
+export type pokemonSprites = {
     other: {
         dream_world: {
             front_default: string;
@@ -76,4 +77,25 @@ export type evolutionChain = {
 export type pokemonEvolution = {
     id: number;
     chain: evolutionChain;
+};
+
+// ability
+export type AbilityDetail = {
+    id: number;
+    name: string;
+    effect_entries: {
+        effect: string;
+        short_effect: string;
+        language: { name: string };
+    }[];
+};
+
+export type AbilityInfo = {
+    id: number;
+    name: string;
+    effect_entries: {
+        effect: string;
+        short_effect: string;
+        language: { name: string };
+    }[];
 };

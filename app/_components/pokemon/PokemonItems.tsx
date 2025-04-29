@@ -1,9 +1,9 @@
 "use client";
 
 import React, {useEffect, useRef, useState} from "react";
-import {getLessDetailedPokemonList} from "@/app/_services/pokemonApi";
-import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
 import {Button, Grid} from "@mui/material";
+import {getAbilityInfo, getLessDetailedPokemonList} from "@/app/_services/pokemonApi";
+import { lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
 import DisplayList from "@/app/_components/DisplayList";
 import DisplayGrid from "@/app/_components/DisplayGrid";
 import SearchBar from "@/app/_components/SearchBar";
@@ -11,7 +11,8 @@ import {getTypeList} from "@/app/_services/typeApi";
 import FilterSelect from "@/app/_components/FilterSelect";
 
 const PokemonItems = () => {
-    const [pokemon, setPokemon] = useState<lessPokemonDetail[]>([]); // is used for the grid and list
+    const [pokemon, setPokemon] = useState<lessPokemonDetail[]>([]);
+    const [ablilites, setAblilites] = useState<lessPokemonDetail[]>([]);
     const [paginationModel, setPaginationModel] = useState({
         page: 0,
         pageSize: 5,
