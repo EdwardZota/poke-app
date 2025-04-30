@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
-import { lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
+import {
+    allPokemonDetail,
+    lessPokemonDetail
+} from "@/app/_services/customTypes/SinglePokemonInfo";
 import SearchResults from "@/app/_components/SearchResults";
 import { berryDetails } from "@/app/_services/customTypes/SingleBerryInfo";
 import { itemDetails } from "@/app/_services/customTypes/SingleItemInfo";
@@ -8,9 +11,10 @@ import { itemDetails } from "@/app/_services/customTypes/SingleItemInfo";
 interface SearchBarProps {
     allElements: (lessPokemonDetail | berryDetails | itemDetails)[];
     typology: string
+    onSelectElement?: (pokemon: allPokemonDetail) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ allElements,typology }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ allElements, typology, onSelectElement }) => {
     const [filteredResults, setFilteredResults] = useState<(lessPokemonDetail | berryDetails | itemDetails)[]>([]);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,15 +36,19 @@ const SearchBar: React.FC<SearchBarProps> = ({ allElements,typology }) => {
             <TextField
                 label="Search"
                 variant="outlined"
-                fullWidth
                 onChange={handleSearchChange}
                 sx={{ mb: 2 }}
             />
             {filteredResults.length > 0 && (
-                <SearchResults results={filteredResults} typology={typology}/>
+                <SearchResults
+                    results={filteredResults}
+                    typology={typology}
+                    onSelectElement={onSelectElement}
+                />
             )}
         </>
     );
 };
+
 
 export default SearchBar;

@@ -1,9 +1,9 @@
 import {api} from './client';
 import {ListResponse} from "./customTypes/PokemonList";
 import {
-    AbilityDetail,
+    abilityDetail,
     allPokemonDetail,
-    lessPokemonDetail,
+    lessPokemonDetail, pokemonEncounter,
     pokemonEvolution
 } from "./customTypes/SinglePokemonInfo";
 
@@ -54,31 +54,42 @@ export const getLessDetailedPokemonList = async (
 };
 
 //get ability info
-export const getAbilityInfo = async (abilityId: number): Promise<AbilityDetail> => {
-    const response = await api.get<AbilityDetail>(`ability/${abilityId}`);
+export const getAbilityInfo = async (abilityId: number): Promise<abilityDetail> => {
+    const response = await api.get<abilityDetail>(`ability/${abilityId}`);
     return response.data;
 }
 
 //get single pokemon evolution
 export const getPokemonEvolution = async (
     name : string,
-): Promise<any> => {
+) => {
     const pokemonSpecies = await getSpecies(name);
-    const idEvolution = extractIdFromUrl(pokemonSpecies.evolution_chain.url);
+    const idEvolution = extractIdFromUrl(pokemonSpecies.evolution_chain.url,"evolution");
     return api.get<pokemonEvolution>(`evolution-chain/${idEvolution}`)
 };
 
+//get pokemon encounter
+export const getPokemonEncounter = async (
+    url : string,
+) => {
+    const idEncounter = extractIdFromUrl(url,"encounter");
+    return api.get<pokemonEncounter[]>(`${resource}/${idEncounter}/encounters`)
+};
+
 //get pokemon species
-export const getSpecies = async (name: string): Promise<any> => {
+export const getSpecies = async (name: string)=> {
     const response = await api.get<any>(`${resource}-species/${name}`);
     return response.data;
 };
 
 
-function extractIdFromUrl(url: string): number {
-    const matches = url.match(/\/(\d+)\/$/);
-    if (matches) {
-        return parseInt(matches[1], 10);
+function extractIdFromUrl(url: string, type: string): number {
+    let matches: RegExpMatchArray | null = null;
+    if (type === "evolution") {
+        matches = url.match(/\/(\d+)\/$/);
+    } else if (type === "encounter") {
+        matches = url.match(/\/pokemon\/(\d+)\//);
     }
-    return -1;
+
+    return matches ? parseInt(matches[1], 10) : -1;
 }

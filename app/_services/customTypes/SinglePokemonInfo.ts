@@ -3,6 +3,7 @@ import {nameAndUrl} from "@/app/_services/customTypes/nameAndUrl";
 export type allPokemonDetail = {
     id: number;
     name: string;
+    base_experience:string;
     height: number;
     weight: number;
     order: number;
@@ -12,6 +13,8 @@ export type allPokemonDetail = {
     abilities: pokemonAbilities[];
     game_indices: pokemonGameIndex[];
     stats: pokemonStats[];
+    location_area_encounters:string;// "/api/v2/pokemon/35/encounters"
+    cries: cries;
 };
 
 export type lessPokemonDetail = {
@@ -67,6 +70,12 @@ export type pokemonSprites = {
     }
 }
 
+export type cries = {
+    latest: string;
+    legacy: string;
+}
+
+
 export type evolutionChain = {
     evolves_to: evolutionChain[];
     species: nameAndUrl;
@@ -77,7 +86,8 @@ export type pokemonEvolution = {
     chain: evolutionChain;
 };
 
-export type AbilityDetail = {
+
+export type abilityDetail = {
     id: number;
     name: string;
     effect_entries: {
@@ -87,7 +97,7 @@ export type AbilityDetail = {
     }[];
 };
 
-export type AbilityInfo = {
+export type abilityInfo = {
     id: number;
     name: string;
     effect_entries: {
@@ -96,3 +106,13 @@ export type AbilityInfo = {
         language: { name: string };
     }[];
 };
+
+export type pokemonEncounter = {
+    location_area: nameAndUrl;
+    version_details: encounterVersionDetails[]
+}
+
+export type encounterVersionDetails = {
+    max_chance: number;
+    version: nameAndUrl;
+}

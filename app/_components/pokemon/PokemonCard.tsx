@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {AbilityInfo, lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
+import React, { useEffect, useState } from "react";
+import { abilityInfo, lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
 import Link from "next/link";
 import {Box, Card, CardMedia, Typography} from "@mui/material";
 import grassImg from "@/app/_pictures/pokemonCardTemplate/grass.png";
@@ -47,7 +47,7 @@ const PokemonCard = ({pokemon}: Props) => {
     };
     const typeImage = typesImage[primaryType] || defaultImg;
 
-    const [abilitiesInfo, setAbilitiesInfo] = useState<AbilityInfo[]>([]);
+    const [abilitiesInfo, setAbilitiesInfo] = useState<abilityInfo[]>([]);
 
     useEffect(() => {
         const fetchAbilities = async () => {
