@@ -1,6 +1,7 @@
+import ComparePage from "@/app/_components/compare/ComparePage";
 
 export default function Comparison() {
     return (
-        <p>im comparison page</p>
+        <ComparePage />
     );
 }

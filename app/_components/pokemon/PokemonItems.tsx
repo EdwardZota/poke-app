@@ -2,7 +2,7 @@
 
 import React, {useEffect, useRef, useState} from "react";
 import {Button, Grid} from "@mui/material";
-import {getAbilityInfo, getLessDetailedPokemonList} from "@/app/_services/pokemonApi";
+import {getLessDetailedPokemonList} from "@/app/_services/pokemonApi";
 import { lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
 import DisplayList from "@/app/_components/DisplayList";
 import DisplayGrid from "@/app/_components/DisplayGrid";

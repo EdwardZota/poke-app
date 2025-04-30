@@ -46,8 +46,8 @@ export default function PokemonDetail({pokemon}: Props) {
 
             setNamePics(pics);
         };
-
-        fetchData().then();
+        
+        fetchData();
     }, [pokemon.name]);
 
     return (
