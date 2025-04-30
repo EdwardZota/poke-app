@@ -9,6 +9,7 @@ import NavbarImage from "./NavbarImage";
 import ResponsiveNavbar from "./ResponsiveNavbar";
 import DarkLightSwitch from "./DarkLightSwitch";
 import LanguageSelector from "./LanguageSelector";
+import NavbarPages from "@/app/_components/header/NavbarPages";
 
 interface NavbarProps {
     handleChange: () => void;
@@ -34,7 +35,6 @@ function ResponsiveAppBar({ handleChange, mode }: NavbarProps) {
             <Container
                 maxWidth={false}
                 sx={{ margin: '0px', width: "100%" }}
-                className="dlfsadkjfghoisdfokjsdfhgfpolifdsjgopkfsdgh ofsdkhgdsafuoigfzhsdaoifugfhzfdsoiughffdsoigf hreasoughri9o"
             >
                 <Toolbar disableGutters>
                     <NavbarImage
@@ -48,6 +48,7 @@ function ResponsiveAppBar({ handleChange, mode }: NavbarProps) {
                         setAnchorElNav={setAnchorElNav}
                         anchorElNav={anchorElNav}
                     />
+                    <NavbarPages pages={pages} handleCloseNavMenu={handleCloseNavMenu}/>
                     <LanguageSelector />
                     <DarkLightSwitch handleChange={handleChange} mode={mode} />
                 </Toolbar>

@@ -12,7 +12,6 @@ import FilterSelect from "@/app/_components/FilterSelect";
 
 const PokemonItems = () => {
     const [pokemon, setPokemon] = useState<lessPokemonDetail[]>([]);
-    const [ablilites, setAblilites] = useState<lessPokemonDetail[]>([]);
     const [paginationModel, setPaginationModel] = useState({
         page: 0,
         pageSize: 5,
@@ -21,9 +20,9 @@ const PokemonItems = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isGridView, setIsGridView] = useState(true);
 
-    const [filteredPokemon, setFilteredPokemon] = useState<lessPokemonDetail[]>([]); // is used for the search
-    const allPokemonRef = useRef<lessPokemonDetail[]>([]); // to load in background all the pokemon
-    const [activePokemon, setActivePokemon] = useState<lessPokemonDetail[]>([]); // is used for the visible list
+    const [filteredPokemon, setFilteredPokemon] = useState<lessPokemonDetail[]>([]);
+    const allPokemonRef = useRef<lessPokemonDetail[]>([]);
+    const [activePokemon, setActivePokemon] = useState<lessPokemonDetail[]>([]);
 
     const [selectedType, setSelectedType] = useState('');
 

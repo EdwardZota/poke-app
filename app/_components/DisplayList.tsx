@@ -6,7 +6,7 @@ import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
 import {useRouter} from 'next/navigation';
 import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
 import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
-import ImageNotAvailable from "@/app/_pictures/ImageNotAvailable.png";
+import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png"
 
 interface ListedElementsProps {
     elements: (lessPokemonDetail | berryDetails | itemDetails)[];
@@ -44,7 +44,7 @@ const DisplayList = ({
                     width: 175,
                     renderCell: (params) => (
                         <img
-                            src={params.row.sprites.other.dream_world.front_default || ImageNotAvailable.src}
+                            src={params.row.sprites.other.dream_world.front_default || missingNo.src}
                             alt={params.row.name}
                             style={{width: 175, height: 175}}
                         />
@@ -86,7 +86,7 @@ const DisplayList = ({
                     width: 100,
                     renderCell: (params) => (
                         <img
-                            src={params.row.sprites.default || ImageNotAvailable.src}
+                            src={params.row.sprites.default || missingNo.src}
                             alt={params.row.name}
                             style={{width: 75, height: 75}}
                         />

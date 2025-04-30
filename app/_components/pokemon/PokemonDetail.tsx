@@ -16,7 +16,7 @@ import {
 } from "@/app/_services/pokemonApi";
 import {useEffect, useState} from "react";
 import {nameAndUrl} from "@/app/_services/customTypes/nameAndUrl";
-import ImageNotAvailable from "@/app/pictures/ImageNotAvailable.png"
+import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png"
 
 type Props = {
     pokemon: allPokemonDetail;
@@ -47,10 +47,8 @@ export default function PokemonDetail({pokemon}: Props) {
             setNamePics(pics);
         };
 
-        fetchData();
+        fetchData().then();
     }, [pokemon.name]);
-
-    console.log(namePics);
 
     return (
         <div className="max-w-4xl mx-auto p-6 mt-10">
@@ -127,7 +125,7 @@ export default function PokemonDetail({pokemon}: Props) {
                         {namePics.map(({ name, url }) => (
                             <div key={name}
                                  className="flex items-center space-x-4 my-2">
-                                <img src={url || ImageNotAvailable.src} alt={name}
+                                <img src={url || missingNo.src} alt={name}
                                      className="h-20 w-20 object-contain"/>
                                 <Typography variant="body1"
                                             className="capitalize">

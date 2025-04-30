@@ -11,7 +11,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
     const [mode, setMode] = useState<boolean | null>(null);
 
 
-    useEffect(() => {     // Loading data in local storage if not light mode
+    useEffect(() => {
         const storedMode = localStorage.getItem("themeMode");
         if (storedMode !== null) {
             setMode(JSON.parse(storedMode));
@@ -21,7 +21,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
     }, []);
 
 
-    useEffect(() => {     // Stores the mode in local storage every time mode gets changed
+    useEffect(() => {
         if (mode !== null) {
             localStorage.setItem("themeMode", JSON.stringify(mode));
         }

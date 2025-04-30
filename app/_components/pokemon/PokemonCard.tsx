@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { AbilityInfo, lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
+import React, {useEffect, useState} from "react";
+import {AbilityInfo, lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
 import Link from "next/link";
-import { Box, Card, CardMedia, Typography } from "@mui/material";
+import {Box, Card, CardMedia, Typography} from "@mui/material";
 import grassImg from "@/app/_pictures/pokemonCardTemplate/grass.png";
 import fireImg from "@/app/_pictures/pokemonCardTemplate/fire.png";
 import normalImg from "@/app/_pictures/pokemonCardTemplate/normal.png";
@@ -14,16 +14,17 @@ import psychicImg from "@/app/_pictures/pokemonCardTemplate/psychic.png"
 import steelImg from "@/app/_pictures/pokemonCardTemplate/steel.png"
 import waterImg from "@/app/_pictures/pokemonCardTemplate/water.png"
 import defaultImg from "@/app/_pictures/pokemonCardTemplate/blank.png"
-import { getAbilityInfo } from "@/app/_services/pokemonApi";
+import {getAbilityInfo} from "@/app/_services/pokemonApi";
+import backgroundImage from "@/app/_pictures/pokemonCardTemplate/backgroundImage.jpg"
+import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png"
 
 type Props = {
     pokemon: lessPokemonDetail;
 };
 
-const PokemonCard = ({ pokemon }: Props) => {
+const PokemonCard = ({pokemon}: Props) => {
 
     const primaryType = pokemon.types[0].type.name;
-    console.log(primaryType)
     const typesImage: Record<string, any> = {
         normal: normalImg,
         fire: fireImg,
@@ -72,7 +73,7 @@ const PokemonCard = ({ pokemon }: Props) => {
     }
 
     return (
-        <Link href={`/pokemon/${pokemon.name}`} style={{ textDecoration: "none" }}>
+        <Link href={`/pokemon/${pokemon.name}`} style={{textDecoration: "none"}}>
             <Card
                 sx={{
                     backgroundImage: `url(${typeImage.src})`,
@@ -90,13 +91,20 @@ const PokemonCard = ({ pokemon }: Props) => {
                         justifyContent: "space-between",
                         paddingTop: "1.25rem",
                         paddingLeft: "6rem",
-                        paddingRight: "3.75rem",
+                        paddingRight: "3.5rem",
                     }}
                 >
-                    <Typography sx={{ fontSize: "1.2rem", fontWeight: "bold" }}>
-                        {toPascalCase(pokemon.name)}
-                    </Typography>
-                    <Box sx={{ display: "flex", flexDirection: "row" }}>
+                    <Typography
+                        sx={{
+                            fontSize: "1.2rem",
+                            fontWeight: "bold",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            maxWidth: "10rem",
+                        }}
+                    >{toPascalCase(pokemon.name)}</Typography>
+                    <Box sx={{display: "flex", flexDirection: "row"}}>
                         <Typography
                             sx={{
                                 fontSize: "0.7rem",
@@ -104,35 +112,88 @@ const PokemonCard = ({ pokemon }: Props) => {
                                 fontWeight: "bold",
                                 paddingRight: "0.1rem",
                             }}
-                        >
-                            HP
-                        </Typography>
-                        <Typography sx={{ fontSize: "1.2rem", paddingTop: "0.15rem", fontWeight: "bold" }}>
+                        >HP</Typography>
+                        <Typography sx={{fontSize: "1.2rem", paddingTop: "0.15rem", fontWeight: "bold"}}>
                             {pokemon.stats[0].base_stat}
                         </Typography>
                     </Box>
                 </Box>
 
-                <Box sx={{ height: "14.2rem", width: "100%", paddingTop: "0.45rem" }}>
+                <Box
+                    sx={{
+                        height: "13.75rem",
+                        width: "auto",
+                        marginLeft: "2.2rem",
+                        marginRight: "2.1rem",
+                        marginTop: "0.4rem",
+                        marginBottom: "1rem",
+                        backgroundImage: `url(${backgroundImage.src})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        borderRadius: "0.1rem",
+                        overflow: "hidden",
+                    }}
+                >
                     <CardMedia
                         component="img"
-                        src={pokemon.sprites.other.dream_world.front_default}
-                        sx={{ height: "100%", width: "100%", objectFit: "contain", padding: "1rem" }}
+                        src={pokemon.sprites.other.dream_world?.front_default || missingNo.src}
+                        onError={() => {
+                        }}
+                        sx={{
+                            height: "100%",
+                            width: "100%",
+                            objectFit: "contain",
+                            padding: "1rem",
+                        }}
+                        alt={pokemon.name}
                     />
                 </Box>
 
-                <Box sx={{height: "11.25rem", width: "95%", marginTop: "1rem", overflowY: "auto", maxHeight: "12.25rem"}}>
+
+                <Box
+                    sx={{
+                        height: "11.25rem",
+                        width: "95%",
+                        marginTop: "1rem",
+                        overflowY: "auto",
+                        maxHeight: "12.25rem",
+                        scrollbarColor: "#ffffff transparent",
+                    }}
+                >
                     {abilitiesInfo.map((ability, index) => (
-                        <Box key={index} sx={{ paddingLeft: "2.5rem", paddingRight: "2.5rem", paddingTop: "0.5rem" }}>
-                            <Typography sx={{ fontSize: "1rem" }} variant="body1" fontWeight="bold">
+                        <Box key={index} sx={{paddingLeft: "2.5rem", paddingRight: "2.5rem", paddingTop: "0.5rem"}}>
+                            <Typography sx={{fontSize: "1rem"}} variant="body1" fontWeight="bold">
                                 {toPascalCase(ability.name)}
                             </Typography>
                             <Typography sx={{fontSize: "0.9rem"}} variant="body2">
-                                {ability.effect_entries[0]?.short_effect}
+                                {ability.effect_entries[0].short_effect}
                             </Typography>
                         </Box>
                     ))}
                 </Box>
+
+                {pokemon.id >= 1000 ? (
+                    <Box sx={{
+                        height: "3rem",
+                        width: "10rem",
+                        marginLeft: "12.75rem",
+                        marginTop: "0.8rem",
+                        fontWeight: "bold"
+                    }}>
+                        Pokédex ID: {pokemon.id}
+                    </Box>
+                ) : (
+                    <Box sx={{
+                        height: "3rem",
+                        width: "10rem",
+                        marginLeft: "13.5rem",
+                        marginTop: "0.8rem",
+                        fontWeight: "bold"
+                    }}>
+                        Pokédex ID: {pokemon.id}
+                    </Box>
+                )}
             </Card>
         </Link>
     );

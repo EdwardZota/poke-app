@@ -14,7 +14,6 @@ type Props = {
 };
 
 export default function BerryDetail({berry}: Props) {
-    console.log(berry)
     return (
         <div className="max-w-4xl mx-auto p-6 mt-10">
             <Typography variant="h3" component="h1"
