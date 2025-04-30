@@ -3,9 +3,9 @@ import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Link from "next/link";
+import Button from "@mui/material/Button";
 
 type ResponsiveNavbarProps = {
     pages: { name: string, url: string }[];
@@ -62,9 +62,22 @@ function ResponsiveNavbar({pages, setAnchorElNav, anchorElNav}: ResponsiveNavbar
                 }}
             >
                 {pages.map((page) => (
-                    <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                        <Typography sx={{textAlign: 'center'}}>{page.name}</Typography>
-                    </MenuItem>
+                    <Link key={page.url} href={page.url}>
+                        <Button
+                            key={page.name}
+                            onClick={() => {handleCloseNavMenu()}}
+                            sx={{
+                                my: 2,
+                                color: 'black',
+                                display: 'block',
+                                px: "3rem",
+                                fontSize: '1.2rem',
+                                fontWeight: 600
+                            }}
+                        >
+                            {page.name}
+                        </Button>
+                    </Link>
                 ))}
             </Menu>
         </Box>
