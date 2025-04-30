@@ -8,7 +8,6 @@ import PokemonImage from '@/app/_pictures/PokemonImage.png';
 import NavbarImage from "./NavbarImage";
 import ResponsiveNavbar from "./ResponsiveNavbar";
 import DarkLightSwitch from "./DarkLightSwitch";
-import LanguageSelector from "./LanguageSelector";
 import NavbarPages from "@/app/_components/header/NavbarPages";
 
 interface NavbarProps {
@@ -49,7 +48,6 @@ function ResponsiveAppBar({ handleChange, mode }: NavbarProps) {
                         anchorElNav={anchorElNav}
                     />
                     <NavbarPages pages={pages} handleCloseNavMenu={handleCloseNavMenu}/>
-                    <LanguageSelector />
                     <DarkLightSwitch handleChange={handleChange} mode={mode} />
                 </Toolbar>
             </Container>

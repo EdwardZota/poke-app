@@ -1,9 +1,7 @@
 "use client";
 
 import React, {useEffect, useRef, useState} from "react";
-import { Button } from "@mui/material";
 import DisplayList from "@/app/_components/DisplayList";
-import PokemonGrid from "@/app/_components/DisplayGrid";
 import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
 import {
     getAllDetailedBerryList,
@@ -18,7 +16,6 @@ const PokemonItems = () => {
     });
     const [hasNextPage, setHasNextPage] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-    const [isGridView, setIsGridView] = useState(true);
     const [allBerry, setAllBerry] = useState<berryDetails[]>([]);
     const allBerryRef = useRef<berryDetails[] | null>(null);
 
@@ -45,7 +42,7 @@ const PokemonItems = () => {
             }
         };
 
-        fetchData();
+        fetchData().then();
     }, [paginationModel]);
 
     useEffect(() => {
@@ -68,37 +65,19 @@ const PokemonItems = () => {
             }
         };
 
-        prefetchAllBerry();
+        prefetchAllBerry().then();
     }, []);
 
     return (
         <div>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setIsGridView((prev) => !prev)}
-                sx={{ marginBottom: "20px" }}
-            >
-                Toggle View
-            </Button>
             <SearchBar allElements={allBerry} typology={"berry"}/>
-            {isGridView ? (
-                <PokemonGrid
-                    elements={berry}
-                    paginationModel={paginationModel}
-                    onPaginationModelChange={setPaginationModel}
-                    hasNextPage={hasNextPage}
-                    isLoading={isLoading}
-                />
-            ) : (
-                <DisplayList
-                    elements={berry}
-                    paginationModel={paginationModel}
-                    onPaginationModelChange={setPaginationModel}
-                    hasNextPage={hasNextPage}
-                    isLoading={isLoading}
-                />
-            )}
+            <DisplayList
+                elements={berry}
+                paginationModel={paginationModel}
+                onPaginationModelChange={setPaginationModel}
+                hasNextPage={hasNextPage}
+                isLoading={isLoading}
+            />
         </div>
     );
 };
