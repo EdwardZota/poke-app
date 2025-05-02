@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 import {
-    allPokemonDetail,
-    lessPokemonDetail
-} from "@/app/_services/customTypes/SinglePokemonInfo";
+    AllPokemonDetail,
+    LessPokemonDetail
+} from "@/app/_utils/SinglePokemonInfo";
 import SearchResults from "@/app/_components/SearchResults";
-import { berryDetails } from "@/app/_services/customTypes/SingleBerryInfo";
-import { itemDetails } from "@/app/_services/customTypes/SingleItemInfo";
+import { ItemDetails } from "@/app/_utils/SingleItemInfo";
 
 interface SearchBarProps {
-    allElements: (lessPokemonDetail | berryDetails | itemDetails)[];
+    allElements: (LessPokemonDetail | ItemDetails)[];
     typology: string
-    onSelectElement?: (pokemon: allPokemonDetail) => void;
+    onSelectElement?: (pokemon: AllPokemonDetail) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ allElements, typology, onSelectElement }) => {
-    const [filteredResults, setFilteredResults] = useState<(lessPokemonDetail | berryDetails | itemDetails)[]>([]);
+    const [filteredResults, setFilteredResults] = useState<(LessPokemonDetail | ItemDetails)[]>([]);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchQuery = event.target.value.toLowerCase();
@@ -23,9 +22,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ allElements, typology, onSelectEl
             setFilteredResults([]);
         } else {
             const filtered = allElements
-                .filter((item) =>
-                    item.name.toLowerCase().includes(searchQuery)
-                )
+                .filter((item) => {
+                    if (typeof item.name === 'string') {
+                        return item.name.toLowerCase().includes(searchQuery);
+                    }
+                    return false;
+                })
                 .slice(0, 5);
             setFilteredResults(filtered);
         }

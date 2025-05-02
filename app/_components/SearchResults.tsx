@@ -1,17 +1,16 @@
 import React from 'react';
 import {
-    allPokemonDetail,
-    lessPokemonDetail
-} from "@/app/_services/customTypes/SinglePokemonInfo";
+    AllPokemonDetail,
+    LessPokemonDetail
+} from "@/app/_utils/SinglePokemonInfo";
 import {Typography} from '@mui/material';
-import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
-import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
+import {ItemDetails} from "@/app/_utils/SingleItemInfo";
 import Link from "next/link";
 
 interface SearchResultsProps {
-    results: (lessPokemonDetail | berryDetails | itemDetails)[];
+    results: (LessPokemonDetail | ItemDetails)[];
     typology: string;
-    onSelectElement?: (element: allPokemonDetail ) => void;
+    onSelectElement?: (element: AllPokemonDetail ) => void;
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({results,typology,onSelectElement}) => {
@@ -21,22 +20,27 @@ const SearchResults: React.FC<SearchResultsProps> = ({results,typology,onSelectE
             {results.length === 0 ? (
                 <Typography>No results found</Typography>
             ) : (
-                results.map((result) =>
-                    typology === "pokemon-compare" ? (
-                        <Typography
-                            key={result.name}
-                            variant="h6"
-                            className="cursor-pointer capitalize"
-                            onClick={() => onSelectElement?.(result as allPokemonDetail)}
-                        >
-                            {result.name}
-                        </Typography>
-                    ) : (
-                        <Link key={result.name} href={`/${typology}/${result.name}`}>
-                            <Typography variant="h6">{result.name}</Typography>
-                        </Link>
-                    )
-                )
+                results.map((result) =>{
+                    if (typeof result.name !== 'string') return null;
+                    if (typology === "pokemon-compare") {
+                        return (
+                            <Typography
+                                key={result.name}
+                                variant="h6"
+                                className="cursor-pointer capitalize"
+                                onClick={() => onSelectElement?.(result as AllPokemonDetail)}
+                            >
+                                {result.name}
+                            </Typography>
+                        );
+                    } else {
+                        return (
+                            <Link key={result.name} href={`/${typology}/${result.name}`}>
+                                <Typography variant="h6">{result.name}</Typography>
+                            </Link>
+                        );
+                    }
+                })
             )}
         </div>
     );

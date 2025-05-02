@@ -1,14 +1,14 @@
 import React from "react";
-import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
+import {ItemDetails} from "@/app/_utils/SingleItemInfo";
 import Link from "next/link";
 import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png"
 import {Box, Card, CardMedia, Typography} from "@mui/material";
 import backgroundImage from "@/app/_pictures/pokemonCardTemplate/backgroundImage.jpg";
 import trainerCard from "@/app/_pictures/pokemonCardTemplate/trainerCard.png";
 
-type Props = {
-    item: itemDetails;
-};
+interface Props {
+    item: ItemDetails;
+}
 
 const ItemCard = ({item}: Props) => {
     function toPascalCase(str: string) {
@@ -17,10 +17,10 @@ const ItemCard = ({item}: Props) => {
 
     const flavorText = item.flavor_text_entries.find(
         entry => entry.language.name === "en"
-    )?.text || "No description available.";
+    )?.text ?? "No description available.";
 
     return (
-        <Link href={`/pokemon/${item.name}`} style={{textDecoration: "none"}}>
+        <Link href={`/item/${item.name}`} style={{textDecoration: "none"}}>
             <Card
                 sx={{
                     backgroundImage: `url(${trainerCard.src})`,
@@ -66,9 +66,7 @@ const ItemCard = ({item}: Props) => {
                 >
                     <CardMedia
                         component="img"
-                        src={item.sprites.default || missingNo.src}
-                        onError={() => {
-                        }}
+                        src={item.sprites.default ?? missingNo.src}
                         sx={{
                             imageRendering: "pixelate",
                             height: "100%",

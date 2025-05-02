@@ -9,20 +9,14 @@ import NavbarImage from "./NavbarImage";
 import ResponsiveNavbar from "./ResponsiveNavbar";
 import DarkLightSwitch from "./DarkLightSwitch";
 import NavbarPages from "@/app/_components/header/NavbarPages";
+import {navPages} from "@/app/_utils/navPages";
 
 interface NavbarProps {
-    handleChange: () => void;
+    handleChangeAction: () => void;
     mode: boolean;
 }
 
-function ResponsiveAppBar({ handleChange, mode }: NavbarProps) {
-    const pages = [
-        { name: 'Pokémon', url: '/' },
-        { name: 'Vergleich', url: '/comparison' },
-        { name: 'Beeren', url: '/berry' },
-        { name: 'Artikel', url: '/item' }
-    ];
-
+export default function Navbar({ handleChangeAction, mode }: NavbarProps) {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const handleCloseNavMenu = () => {
@@ -40,19 +34,17 @@ function ResponsiveAppBar({ handleChange, mode }: NavbarProps) {
                         imageSrc={PokemonImage}
                         height={50}
                         altText={"Pokemon Image"}
-                        linkUrl={pages[0].url}
+                        linkUrl={navPages[0].url}
                     />
                     <ResponsiveNavbar
-                        pages={pages}
+                        pages={navPages}
                         setAnchorElNav={setAnchorElNav}
                         anchorElNav={anchorElNav}
                     />
-                    <NavbarPages pages={pages} handleCloseNavMenu={handleCloseNavMenu}/>
-                    <DarkLightSwitch handleChange={handleChange} mode={mode} />
+                    <NavbarPages pages={navPages} handleCloseNavMenu={handleCloseNavMenu}/>
+                    <DarkLightSwitch handleChangeAction={handleChangeAction} mode={mode} />
                 </Toolbar>
             </Container>
         </AppBar>
     );
-}
-
-export default ResponsiveAppBar;
+};

@@ -3,12 +3,12 @@ import * as React from 'react';
 import { StaticImageData } from 'next/image';
 import Link from 'next/link';
 
-type NavbarImageProps = {
+interface NavbarImageProps {
     imageSrc: string | StaticImageData;
     altText?: string;
     linkUrl: string;
     height?: number;
-};
+}
 
 function NavbarImage({imageSrc, altText, linkUrl, height}: NavbarImageProps) {
     const imgSrc = typeof imageSrc === 'string' ? imageSrc : imageSrc.src;

@@ -1,6 +1,6 @@
 import {api} from './client';
-import {nameAndUrl} from "@/app/_services/customTypes/nameAndUrl";
-import {ListResponse} from "@/app/_services/customTypes/PokemonList";
+import {NameAndUrl} from "@/app/_utils/NameAndUrl";
+import {ListResponse} from "@/app/_utils/ListResponse";
 
 
 const resource = 'type';
@@ -9,5 +9,5 @@ const resource = 'type';
 // get type list
 export const getTypeList = async () => {
     const response = await api.get<ListResponse>(resource);
-    return response.data.results.map((type: nameAndUrl) => type.name);
+    return response.data.results.map((type: NameAndUrl) => type.name);
 };

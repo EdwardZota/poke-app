@@ -1,4 +1,4 @@
-export type ListResponse = {
+export interface ListResponse {
     count: number;
     next: string | null;
     previous: string | null;

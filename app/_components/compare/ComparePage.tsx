@@ -1,6 +1,6 @@
 'use client';
 import React, {useEffect, useState} from "react";
-import {allPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
+import {AllPokemonDetail} from "@/app/_utils/SinglePokemonInfo";
 import SearchBar from "@/app/_components/SearchBar";
 import {getAllDetailedPokemonList} from "@/app/_services/pokemonApi";
 import PokemonComparisonTable
@@ -9,22 +9,22 @@ import {Typography} from "@mui/material";
 
 
 export default function ComparePage() {
-    const [selectedPokemon, setSelectedPokemon] = useState<allPokemonDetail[]>([]);
-    const [allPokemonList, setAllPokemonList] = useState<allPokemonDetail[]>([]);
+    const [selectedPokemon, setSelectedPokemon] = useState<AllPokemonDetail[]>([]);
+    const [allPokemonList, setAllPokemonList] = useState<AllPokemonDetail[]>([]);
 
     useEffect(() => {
         const prefetchAllPokemon = async () => {
             const chunkSize = 100;
             const total = 1500;
-            const all: allPokemonDetail[] = [];
+            const all: AllPokemonDetail[] = [];
 
             for (let offset = 0; offset < total; offset += chunkSize) {
                 try {
                     const chunk = await getAllDetailedPokemonList(offset, chunkSize);
                     all.push(...chunk);
                     setAllPokemonList([...all])
-                } catch (e) {
-                    console.error(`Error in the chunk ${offset}`, e);
+                } catch (error) {
+                    //TODO must be added a toast
                     break;
                 }
                 await new Promise((r) => setTimeout(r, 50));
@@ -34,7 +34,7 @@ export default function ComparePage() {
         prefetchAllPokemon();
     }, []);
 
-    const handleSelect = (pokemon: allPokemonDetail) => {
+    const handleSelect = (pokemon: AllPokemonDetail) => {
         if (selectedPokemon.find(p => p.name === pokemon.name) || selectedPokemon.length >= 4) return;
         setSelectedPokemon(prev => [...prev, pokemon]);
     };

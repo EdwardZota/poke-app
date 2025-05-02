@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import * as React from "react";
 import Link from "next/link";
 
-type NavbarPagesProps = {
+interface NavbarPagesProps  {
     pages: { name: string, url: string }[];
     handleCloseNavMenu: () => void;
 }

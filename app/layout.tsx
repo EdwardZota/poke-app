@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import React from "react";
-import ClientWrapper from "@/app/_components/ClientWrapper";
+import React, {ReactNode} from "react";
+import Layout from "@/app/_components/Layout";
 
 export const metadata: Metadata = {
     title: "Pokemon-Wiki",
     description: "Generated team ENN xD",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+interface RootLayoutProps {
+    children: ReactNode;
+}
+
+export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
     return (
         <html lang="en">
             <body>
-                <ClientWrapper>{children}</ClientWrapper>
+                <Layout>{children}</Layout>
             </body>
         </html>
     );

@@ -7,11 +7,11 @@ import Box from "@mui/material/Box";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 
-type ResponsiveNavbarProps = {
+interface ResponsiveNavbarProps {
     pages: { name: string, url: string }[];
     setAnchorElNav: React.Dispatch<React.SetStateAction<null | HTMLElement>>;
     anchorElNav: null | HTMLElement;
-};
+}
 
 
 function ResponsiveNavbar({pages, setAnchorElNav, anchorElNav}: ResponsiveNavbarProps) {

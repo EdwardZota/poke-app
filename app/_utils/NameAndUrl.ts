@@ -1,4 +1,4 @@
-export type nameAndUrl = {
+export interface NameAndUrl {
     name: string;
     url: string;
-};
+}
