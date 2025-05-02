@@ -1,7 +1,7 @@
 "use client";
 
 import React, {useEffect, useRef, useState} from "react";
-import {Button, Grid} from "@mui/material";
+import {Box, Button, Grid} from "@mui/material";
 import {getLessDetailedPokemonList} from "@/app/_services/pokemonApi";
 import { LessPokemonDetail } from "@/app/_utils/SinglePokemonInfo";
 import DisplayList from "@/app/_components/DisplayList";
@@ -111,23 +111,28 @@ const PokemonItems = () => {
 
     return (
         <div>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setIsGridView((prev) => !prev)}
-                sx={{marginBottom: "20px"}}
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    margin: "1rem",
+                }}
             >
-                Toggle View
-            </Button>
-            <SearchBar allElements={filteredPokemon} typology={"pokemon"}/>
-            <Grid>
                 <FilterSelect
                     label="Type"
                     options={typeOptions}
                     value={selectedType}
                     onChange={handleTypeFilterChange}
                 />
-            </Grid>
+                <SearchBar allElements={filteredPokemon} typology={"pokemon"} />
+                <Button
+                    sx={{maxHeight: "3.5rem", width: "10rem", marginLeft: "1.5rem"}}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setIsGridView((prev) => !prev)}
+                >Toggle View</Button>
+            </Box>
+
             {isGridView ? (
                 <DisplayGrid
                     elements={pokemon}

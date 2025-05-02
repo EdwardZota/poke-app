@@ -1,7 +1,7 @@
 "use client";
 
 import React, {useEffect, useRef, useState} from "react";
-import { Button } from "@mui/material";
+import {Box, Button} from "@mui/material";
 import DisplayList from "@/app/_components/DisplayList";
 import DisplayGrid from "@/app/_components/DisplayGrid";
 import {ItemDetails} from "@/app/_utils/SingleItemInfo";
@@ -75,16 +75,25 @@ const PokemonItems = () => {
 
     return (
         <div>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setIsGridView((prev) => !prev)}
-                sx={{ marginBottom: "20px" }}
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    gap: 2,
+                    margin: "1rem",
+                }}
             >
-                Toggle View
-            </Button>
+                <SearchBar allElements={allItem} typology={"item"} />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setIsGridView((prev) => !prev)}
+                >
+                    Toggle View
+                </Button>
+            </Box>
 
-            <SearchBar allElements={allItem} typology={"item"}/>
             {isGridView ? (
                 <DisplayGrid
                     elements={item}
