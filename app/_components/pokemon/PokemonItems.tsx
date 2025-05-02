@@ -9,6 +9,8 @@ import DisplayGrid from "@/app/_components/DisplayGrid";
 import SearchBar from "@/app/_components/SearchBar";
 import {getTypeList} from "@/app/_services/typeApi";
 import FilterSelect from "@/app/_components/FilterSelect";
+import {toast} from "react-toastify";
+import {AxiosError} from "axios";
 
 const PokemonItems = () => {
     const [pokemon, setPokemon] = useState<LessPokemonDetail[]>([]);
@@ -52,7 +54,9 @@ const PokemonItems = () => {
                     setHasNextPage(fallbackData.length === limit);
                 }
             } catch (error) {
-                //TODO must be toast implemented
+                if (error instanceof AxiosError) {
+                    toast.error(`Axios error: ${error.response?.data?.message ?? error.message ?? 'Unknown error'}`);
+                }
             } finally {
                 setIsLoading(false);
             }
@@ -74,8 +78,10 @@ const PokemonItems = () => {
                     allPokemonRef.current = [...all];
                     setFilteredPokemon(all);
                     setActivePokemon(all);
-                } catch (e) {
-                    //TODO must be toast implemented
+                } catch (error) {
+                    if (error instanceof AxiosError) {
+                        toast.error(`Axios error: ${error.response?.data?.message ?? error.message ?? 'Unknown error'}`);
+                    }
                     break;
                 }
                 await new Promise((r) => setTimeout(r, 50));

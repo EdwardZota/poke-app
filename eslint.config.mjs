@@ -22,6 +22,7 @@ export default tseslint.config(
             '@typescript-eslint/no-inferrable-types': 'off',
             '@typescript-eslint/explicit-function-return-type': 'off',
             '@typescript-eslint/no-floating-promises': 'off',
+            '@typescript-eslint/no-unsafe-member-access': 'off',
 
             eqeqeq: ['error', 'always'],
             'no-console': 'warn',

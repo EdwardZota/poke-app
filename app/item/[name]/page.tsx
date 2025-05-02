@@ -1,5 +1,5 @@
 import {ItemDetails} from "@/app/_utils/SingleItemInfo";
-import {getItemDetail} from "@/app/_services/ItemApi";
+import {getItemDetail} from "@/app/_services/itemApi";
 import ItemDetail from "@/app/_components/item/ItemDetail";
 
 type Params = Promise<{ name: string }>

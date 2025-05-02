@@ -6,6 +6,8 @@ import {getAllDetailedPokemonList} from "@/app/_services/pokemonApi";
 import PokemonComparisonTable
     from "@/app/_components/compare/PokemonComparisonTable";
 import {Typography} from "@mui/material";
+import {toast} from "react-toastify";
+import {AxiosError} from "axios";
 
 
 export default function ComparePage() {
@@ -24,7 +26,9 @@ export default function ComparePage() {
                     all.push(...chunk);
                     setAllPokemonList([...all])
                 } catch (error) {
-                    //TODO must be added a toast
+                    if (error instanceof AxiosError) {
+                        toast.error(`Error: ${error.response?.data.message}`);
+                    }
                     break;
                 }
                 await new Promise((r) => setTimeout(r, 50));

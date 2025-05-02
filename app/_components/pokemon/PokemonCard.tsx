@@ -26,7 +26,7 @@ interface Props {
 const PokemonCard = ({pokemon}: Props) => {
 
     const primaryType = pokemon.types[0].type.name;
-    const typesImage: Record<string, any> = {
+    const typesImage: Record<string, StaticImageData> = {
         normal: normalImg,
         fire: fireImg,
         water: waterImg,

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 
 const BASE_URL = 'https://pokeapi.co/api/v2/';
 
@@ -11,3 +11,9 @@ export const api = axios.create({
     },
 });
 
+api.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => {
+        return Promise.reject(error);
+    }
+);
