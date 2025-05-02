@@ -10,8 +10,6 @@ import {
     SelectChangeEvent,
     Box
 } from "@mui/material";
-import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
-import {Grid, Button, MenuItem, Select, Typography, SelectChangeEvent} from "@mui/material";
 import { LessPokemonDetail } from "@/app/_utils/SinglePokemonInfo";
 import PokemonCard from "@/app/_components/pokemon/PokemonCard";
 import {ItemDetails} from "@/app/_utils/SingleItemInfo";
@@ -75,9 +73,6 @@ const DisplayGrid = ({
                     {elements.map((element) => {
                         if (isPokemon(element)) {
                             return <PokemonCard key={element.id} pokemon={element}/>;
-                        }
-                        if (isBerry(element)) {
-                            return <BerryCard key={element.id} berry={element}/>;
                         }
                         if (isItem(element)) {
                             return <ItemCard key={element.id} item={element}/>;
