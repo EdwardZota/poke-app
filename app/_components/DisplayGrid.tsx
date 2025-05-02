@@ -1,6 +1,16 @@
 "use client";
 
 import React from "react";
+import {
+    Grid,
+    Button,
+    MenuItem,
+    Select,
+    Typography,
+    SelectChangeEvent,
+    Box
+} from "@mui/material";
+import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
 import {Grid, Button, MenuItem, Select, Typography, SelectChangeEvent} from "@mui/material";
 import { LessPokemonDetail } from "@/app/_utils/SinglePokemonInfo";
 import PokemonCard from "@/app/_components/pokemon/PokemonCard";
@@ -19,28 +29,28 @@ interface Props {
 }
 
 const DisplayGrid = ({
-   elements,
-   paginationModel,
-   onPaginationModelChange,
-   hasNextPage,
-   isLoading,
+     elements,
+     paginationModel,
+     onPaginationModelChange,
+     hasNextPage,
+     isLoading,
 }: Props) => {
-    const { page, pageSize } = paginationModel;
+    const {page, pageSize} = paginationModel;
 
     const handlePrev = () => {
         if (page > 0) {
-            onPaginationModelChange({ page: page - 1, pageSize });
+            onPaginationModelChange({page: page - 1, pageSize});
         }
     };
 
     const handleNext = () => {
         if (hasNextPage) {
-            onPaginationModelChange({ page: page + 1, pageSize });
+            onPaginationModelChange({page: page + 1, pageSize});
         }
     };
 
     const handlePageSizeChange = (event: SelectChangeEvent) => {
-        onPaginationModelChange({ page: 0, pageSize: Number(event.target.value) });
+        onPaginationModelChange({page: 0, pageSize: Number(event.target.value)});
     };
 
     function isPokemon(el: unknown): el is LessPokemonDetail {
@@ -55,11 +65,39 @@ const DisplayGrid = ({
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-4">
-                <Typography variant="h5" fontWeight="bold">
-                    Pokémon List
-                </Typography>
 
-                <div className="flex items-center gap-2">
+            </div>
+
+            {isLoading ? (
+                <Typography>Loading...</Typography>
+            ) : (
+                <Grid container spacing={5} justifyContent="center">
+                    {elements.map((element) => {
+                        if (isPokemon(element)) {
+                            return <PokemonCard key={element.id} pokemon={element}/>;
+                        }
+                        if (isBerry(element)) {
+                            return <BerryCard key={element.id} berry={element}/>;
+                        }
+                        if (isItem(element)) {
+                            return <ItemCard key={element.id} item={element}/>;
+                        }
+                        return null;
+                    })}
+                </Grid>
+            )}
+            <Box sx={{ display: "flex", margin: "2rem"}}>
+                <Box sx={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", gap: "5rem" }}>
+                    <Button onClick={handlePrev} disabled={page === 0} variant="outlined" sx={{ height: "3rem" }}>
+                        Previous
+                    </Button>
+                    <Typography>Page {page + 1}</Typography>
+                    <Button onClick={handleNext} disabled={!hasNextPage} variant="outlined" sx={{ height: "3rem" }}>
+                        Next
+                    </Button>
+                </Box>
+
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <Typography>Pokémon per page:</Typography>
                     <Select
                         size="small"
@@ -73,36 +111,8 @@ const DisplayGrid = ({
                             </MenuItem>
                         ))}
                     </Select>
-                </div>
-            </div>
-
-            {isLoading ? (
-                <Typography>Loading...</Typography>
-            ) : (
-                <Grid container spacing={5} justifyContent="center">
-                    {elements.map((element) => {
-                        if (isPokemon(element)) {
-                            return <PokemonCard key={element.id} pokemon={element} />;
-                        }
-                        if (isItem(element)) {
-                            return <ItemCard key={element.id} item={element} />;
-                        }
-                        return null;
-                    })}
-                </Grid>
-            )}
-
-            <div className="flex justify-between mt-4">
-                <Button onClick={handlePrev} disabled={page === 0} variant="outlined">
-                    Previous
-                </Button>
-                <Typography>
-                    Page {page + 1}
-                </Typography>
-                <Button onClick={handleNext} disabled={!hasNextPage} variant="outlined">
-                    Next
-                </Button>
-            </div>
+                </Box>
+            </Box>
         </div>
     );
 };

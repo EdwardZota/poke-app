@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import {
     AllPokemonDetail,
     LessPokemonDetail
@@ -34,23 +34,42 @@ const SearchBar: React.FC<SearchBarProps> = ({ allElements, typology, onSelectEl
     };
 
     return (
-        <>
+        <Box sx={{ position: "relative", width: "15rem" }}>
             <TextField
                 label="Search"
-                variant="outlined"
                 onChange={handleSearchChange}
-                sx={{ mb: 2 }}
+                sx={{ width: "100%" }}
             />
+
             {filteredResults.length > 0 && (
-                <SearchResults
-                    results={filteredResults}
-                    typology={typology}
-                    onSelectElement={onSelectElement}
-                />
-            )}
-        </>
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "100%",
+                        left: 0,
+                        right: 0,
+                        zIndex: 20,
+                        backgroundColor: "background.paper",
+                        boxShadow: 3,
+                        maxHeight: "300px",
+                        overflowY: "auto",
+                        borderRadius: 1,
+                        mt: 1,
+                    }}
+                >
+                    <SearchResults
+                        results={filteredResults}
+                        typology={typology}
+                        onSelectElement={onSelectElement}
+                    />
+                </Box>
+
+
+
+
+                )}
+        </Box>
     );
 };
-
 
 export default SearchBar;
