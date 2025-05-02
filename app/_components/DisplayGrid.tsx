@@ -1,23 +1,14 @@
 "use client";
 
 import React from "react";
-import {
-    Grid,
-    Button,
-    MenuItem,
-    Select,
-    Typography,
-    SelectChangeEvent
-} from "@mui/material";
-import { lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
+import {Grid, Button, MenuItem, Select, Typography, SelectChangeEvent} from "@mui/material";
+import { LessPokemonDetail } from "@/app/_utils/SinglePokemonInfo";
 import PokemonCard from "@/app/_components/pokemon/PokemonCard";
-import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
-import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
-import BerryCard from "@/app/_components/berry/BerryCard";
+import {ItemDetails} from "@/app/_utils/SingleItemInfo";
 import ItemCard from "@/app/_components/item/ItemCard";
 
-type Props = {
-    elements: (lessPokemonDetail | berryDetails | itemDetails)[];
+interface Props {
+    elements: (LessPokemonDetail | ItemDetails)[];
     paginationModel: {
         page: number;
         pageSize: number;
@@ -25,7 +16,7 @@ type Props = {
     onPaginationModelChange: (model: { page: number; pageSize: number }) => void;
     hasNextPage: boolean;
     isLoading: boolean;
-};
+}
 
 const DisplayGrid = ({
    elements,
@@ -52,15 +43,11 @@ const DisplayGrid = ({
         onPaginationModelChange({ page: 0, pageSize: Number(event.target.value) });
     };
 
-    function isPokemon(el: unknown): el is lessPokemonDetail {
+    function isPokemon(el: unknown): el is LessPokemonDetail {
         return !!el && typeof el === "object" && "height" in el && "weight" in el;
     }
 
-    function isBerry(el: unknown): el is berryDetails {
-        return !!el && typeof el === "object" && "flavors" in el;
-    }
-
-    function isItem(el: unknown): el is itemDetails {
+    function isItem(el: unknown): el is ItemDetails {
         return !!el && typeof el === "object" && "cost" in el;
     }
 
@@ -96,9 +83,6 @@ const DisplayGrid = ({
                     {elements.map((element) => {
                         if (isPokemon(element)) {
                             return <PokemonCard key={element.id} pokemon={element} />;
-                        }
-                        if (isBerry(element)) {
-                            return <BerryCard key={element.id} berry={element} />;
                         }
                         if (isItem(element)) {
                             return <ItemCard key={element.id} item={element} />;

@@ -4,11 +4,11 @@ import {
     Typography,
     Grid,
 } from '@mui/material';
-import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
+import {ItemDetails} from "@/app/_utils/SingleItemInfo";
 
-type Props = {
-    item: itemDetails;
-};
+interface Props {
+    item: ItemDetails;
+}
 
 export default function ItemDetail({item}: Props) {
     const englishEffect = item.effect_entries.find(e => e.language.name === 'en');

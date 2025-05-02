@@ -1,25 +1,30 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React, {ReactNode, useEffect, useState} from "react";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import Navbar from "@/app/_components/header/HeaderNavbar";
+import Navbar from "@/app/_components/header/Header";
 import FooterNavbar from "@/app/_components/footer/FooterNavbar";
 
-export default function ClientWrapper({ children }: { children: React.ReactNode }) {
-
+interface LayoutProps {
+    children: ReactNode;
+}
+export default function Layout({children}: LayoutProps) {
     const [mode, setMode] = useState<boolean | null>(null);
-
 
     useEffect(() => {
         const storedMode = localStorage.getItem("themeMode");
         if (storedMode !== null) {
-            setMode(JSON.parse(storedMode));
+            const parsed = JSON.parse(storedMode);
+            if (typeof parsed === 'boolean') {
+                setMode(parsed);
+            } else {
+                setMode(false);
+            }
         } else {
             setMode(false);
         }
     }, []);
-
 
     useEffect(() => {
         if (mode !== null) {
@@ -42,13 +47,18 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
 
     return (
         <ThemeProvider theme={appTheme}>
-            <Paper elevation={0} sx={{ height: "100vh" }} square>
-                <div style={{display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden"}}>
-                    <Navbar handleChange={handleChange} mode={mode} />
-                    <main style={{ flex: 1, overflowY: "auto" }}>
+            <Paper elevation={0} sx={{height: "100vh"}} square>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100vh",
+                    overflow: "hidden"
+                }}>
+                    <Navbar handleChangeAction={handleChange} mode={mode}/>
+                    <main style={{flex: 1, overflowY: "auto"}}>
                         {children}
                     </main>
-                    <FooterNavbar />
+                    <FooterNavbar/>
                 </div>
             </Paper>
         </ThemeProvider>

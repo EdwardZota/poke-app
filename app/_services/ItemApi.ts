@@ -1,6 +1,6 @@
 import {api} from './client';
-import {ListResponse} from "@/app/_services/customTypes/PokemonList";
-import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
+import {ListResponse} from "@/app/_utils/ListResponse";
+import {ItemDetails} from "@/app/_utils/SingleItemInfo";
 
 const resource = 'item';
 
@@ -14,8 +14,8 @@ export const getItemList = async (offset : number, limit : number): Promise<List
 };
 
 // get a single berry
-export const getItemDetail = async (name : string): Promise<itemDetails> => {
-    const response = await api.get<itemDetails>(`${resource}/${name}`);
+export const getItemDetail = async (name : string): Promise<ItemDetails> => {
+    const response = await api.get<ItemDetails>(`${resource}/${name}`);
     return response.data;
 };
 
@@ -24,7 +24,7 @@ export const getItemDetail = async (name : string): Promise<itemDetails> => {
 export const getAllDetailedItemList = async (
     offset : number,
     limit : number,
-): Promise<itemDetails[]> => {
+): Promise<ItemDetails[]> => {
     const list = await getItemList(offset, limit);
     return await Promise.all(
         list.results.map((p) => getItemDetail(p.name))

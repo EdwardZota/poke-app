@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { abilityInfo, lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
+import { AbilityInfo, LessPokemonDetail } from "@/app/_utils/SinglePokemonInfo";
 import Link from "next/link";
 import {Box, Card, CardMedia, Typography} from "@mui/material";
 import grassImg from "@/app/_pictures/pokemonCardTemplate/grass.png";
@@ -17,10 +17,11 @@ import defaultImg from "@/app/_pictures/pokemonCardTemplate/blank.png"
 import {getAbilityInfo} from "@/app/_services/pokemonApi";
 import backgroundImage from "@/app/_pictures/pokemonCardTemplate/backgroundImage.jpg"
 import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png"
+import {StaticImageData} from "next/image";
 
-type Props = {
-    pokemon: lessPokemonDetail;
-};
+interface Props {
+    pokemon: LessPokemonDetail;
+}
 
 const PokemonCard = ({pokemon}: Props) => {
 
@@ -45,9 +46,9 @@ const PokemonCard = ({pokemon}: Props) => {
         steel: steelImg,
         fairy: fairyImg,
     };
-    const typeImage = typesImage[primaryType] || defaultImg;
+    const typeImage: StaticImageData = typesImage[primaryType] ?? defaultImg;
 
-    const [abilitiesInfo, setAbilitiesInfo] = useState<abilityInfo[]>([]);
+    const [abilitiesInfo, setAbilitiesInfo] = useState<AbilityInfo[]>([]);
 
     useEffect(() => {
         const fetchAbilities = async () => {
@@ -60,7 +61,7 @@ const PokemonCard = ({pokemon}: Props) => {
             setAbilitiesInfo(abilitiesData);
         };
 
-        fetchAbilities().then();
+        fetchAbilities();
     }, [pokemon.abilities]);
 
     function getAbilityIdFromUrl(url: string) {
@@ -76,7 +77,7 @@ const PokemonCard = ({pokemon}: Props) => {
         <Link href={`/pokemon/${pokemon.name}`} style={{textDecoration: "none"}}>
             <Card
                 sx={{
-                    backgroundImage: `url(${typeImage.src})`,
+                    backgroundImage: `url(${typeImage.src ?? ''})`,
                     height: "35rem",
                     width: "25rem",
                     backgroundSize: "cover",
@@ -138,8 +139,6 @@ const PokemonCard = ({pokemon}: Props) => {
                     <CardMedia
                         component="img"
                         src={pokemon.sprites.other.dream_world?.front_default || missingNo.src}
-                        onError={() => {
-                        }}
                         sx={{
                             height: "100%",
                             width: "100%",

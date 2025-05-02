@@ -4,7 +4,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 interface FilterSelectProps {
     label: string;
     options: string[];
-    value: string | '';
+    value: string;
     onChange: (value: string) => void;
 }
 

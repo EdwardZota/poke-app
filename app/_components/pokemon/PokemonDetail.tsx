@@ -8,37 +8,37 @@ import {
     ListItemText
 } from '@mui/material';
 import {
-    allPokemonDetail,
-} from "@/app/_services/customTypes/SinglePokemonInfo";
+    AllPokemonDetail, EvolutionChain,
+} from "@/app/_utils/SinglePokemonInfo";
 import {
     getLessPokemonDetail,
     getPokemonEvolution
 } from "@/app/_services/pokemonApi";
 import {useEffect, useState} from "react";
-import {nameAndUrl} from "@/app/_services/customTypes/nameAndUrl";
+import {NameAndUrl} from "@/app/_utils/NameAndUrl";
 import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png"
 
-type Props = {
-    pokemon: allPokemonDetail;
-};
+interface Props {
+    pokemon: AllPokemonDetail;
+}
 
 export default function PokemonDetail({pokemon}: Props) {
-    const [namePics, setNamePics] = useState<nameAndUrl[]>([]);
+    const [namePics, setNamePics] = useState<NameAndUrl[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             const pokemonEvo = await getPokemonEvolution(pokemon.name);
 
-            const extractNames = (chain: any): string[] =>
-                [chain.species.name, ...chain.evolves_to.flatMap((e: any) => extractNames(e))];
+            const extractNames = (chain: EvolutionChain): string[] =>
+                [chain.species.name, ...chain.evolves_to.flatMap((e) => extractNames(e))];
 
             const names = extractNames(pokemonEvo.data.chain);
 
             const pics = await Promise.all(
-                names.map(async (name: string) => {
+                names.map(async (name) => {
                     const pokemonInfo = await getLessPokemonDetail(name);
                     return {
-                        name: name,
+                        name,
                         url: pokemonInfo.sprites.other.dream_world.front_default
                     };
                 })
@@ -46,7 +46,7 @@ export default function PokemonDetail({pokemon}: Props) {
 
             setNamePics(pics);
         };
-        
+
         fetchData();
     }, [pokemon.name]);
 

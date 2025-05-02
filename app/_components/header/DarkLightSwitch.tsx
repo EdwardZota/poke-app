@@ -3,27 +3,18 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { styled } from '@mui/system';
 
-
 interface DarkLightSwitchProps {
-    handleChange: () => void;
+    handleChangeAction: () => void;
     mode: boolean;
 }
-interface MUISwitchProps {
-    defaultChecked: boolean;
-    onToggle: () => void;
-}
 
-export default function DarkLightSwitch({ handleChange, mode }: DarkLightSwitchProps) {
-    return <MUISwitch defaultChecked={mode} onToggle={handleChange} />;
-}
-
-function MUISwitch({ defaultChecked, onToggle }: MUISwitchProps) {
-    const [checked, setChecked] = React.useState(defaultChecked);
+export default function DarkLightSwitch({ handleChangeAction, mode }: DarkLightSwitchProps){
+    const [checked, setChecked] = React.useState(mode);
 
     const handleToggle = () => {
         const newChecked = !checked;
         setChecked(newChecked);
-        onToggle?.();
+        handleChangeAction?.();
     };
 
     return (

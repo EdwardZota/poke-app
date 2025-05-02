@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@base-ui-components/react": "1.0.0-alpha.8",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
     "@mui/base": "5.0.0-beta.70",
@@ -16,7 +17,6 @@
     "@mui/material": "7.0.2",
     "@mui/styled-engine-sc": "7.0.2",
     "@mui/x-data-grid": "^7.28.3",
-    "@base-ui-components/react": "1.0.0-alpha.8",
     "axios": "1.8.4",
     "cookie": "^1.0.2",
     "next": "15.3.0",
@@ -26,11 +26,15 @@
     "styled-components": "^6.1.17"
   },
   "devDependencies": {
-    "@types/react": "19.1.2",
+    "@eslint/js": "^9.25.1",
     "@tailwindcss/postcss": "4",
     "@types/node": "20",
+    "@types/react": "19.1.2",
     "@types/react-dom": "19",
+    "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.2",
     "tailwindcss": "4",
-    "typescript": "5"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.1"
   }
 }

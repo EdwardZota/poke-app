@@ -2,14 +2,13 @@
 
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
 import React from "react";
-import {lessPokemonDetail} from "@/app/_services/customTypes/SinglePokemonInfo";
+import {LessPokemonDetail} from "@/app/_utils/SinglePokemonInfo";
 import {useRouter} from 'next/navigation';
-import {berryDetails} from "@/app/_services/customTypes/SingleBerryInfo";
-import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
+import {ItemDetails} from "@/app/_utils/SingleItemInfo";
 import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png"
 
 interface ListedElementsProps {
-    elements: (lessPokemonDetail | berryDetails | itemDetails)[];
+    elements: (LessPokemonDetail | ItemDetails)[];
     paginationModel: {
         page: number;
         pageSize: number;
@@ -30,7 +29,7 @@ const DisplayList = ({
      isLoading,
 }: ListedElementsProps) => {
     const router = useRouter();
-    const getColumns = (elements: Array<lessPokemonDetail | berryDetails | itemDetails>): GridColDef[] => {
+    const getColumns = (elements: (LessPokemonDetail | ItemDetails)[]): GridColDef[] => {
         if (elements.length === 0) return [];
 
         const sample = elements[0];
@@ -42,13 +41,17 @@ const DisplayList = ({
                     field: "sprite",
                     headerName: "Image",
                     width: 175,
-                    renderCell: (params) => (
-                        <img
-                            src={params.row.sprites.other.dream_world.front_default || missingNo.src}
-                            alt={params.row.name}
-                            style={{width: 175, height: 175}}
-                        />
-                    ),
+                    renderCell: (params) => {
+                        const row = params.row as LessPokemonDetail;
+                        return (
+                            <img
+                                src={row.sprites.other?.dream_world?.front_default ?? missingNo.src}
+
+                                alt={row.name}
+                                style={{ width: 175, height: 175 }}
+                            />
+                        );
+                    },
                 },
                 {field: "id", headerName: "ID", width: 80},
                 {field: "name", headerName: "Name", width: 150},
@@ -65,15 +68,6 @@ const DisplayList = ({
                     type: "number"
                 },
             ];
-        } else if ("growth_time" in sample) {
-            // Berry
-            return [
-                {field: "id", headerName: "ID", width: 80},
-                {field: "name", headerName: "Name", width: 150},
-                {field: "growth_time", headerName: "Growth Time", width: 150},
-                {field: "size", headerName: "Size", width: 100},
-                {field: "smoothness", headerName: "Smoothness", width: 120},
-            ];
         } else if ("cost" in sample && "category" in sample) {
             // Item
             return [
@@ -84,20 +78,23 @@ const DisplayList = ({
                     field: "sprite",
                     headerName: "Image",
                     width: 100,
-                    renderCell: (params) => (
-                        <img
-                            src={params.row.sprites.default || missingNo.src}
-                            alt={params.row.name}
-                            style={{width: 75, height: 75}}
-                        />
-                    ),
+                    renderCell: (params) => {
+                        const row = params.row as ItemDetails;
+                        return (
+                            <img
+                                src={row.sprites.default ?? missingNo.src}
+                                alt={row.name}
+                                style={{ width: 75, height: 75 }}
+                            />
+                        );
+                    },
                 },
             ];
         }
         return [];
     };
 
-    const getDetailRoute = (row: any): string => {
+    const getDetailRoute = (row: LessPokemonDetail | ItemDetails): string => {
         switch (true) {
             case 'growth_time' in row:
                 return `/berry/${row.name}`;
@@ -114,9 +111,8 @@ const DisplayList = ({
             <DataGrid
                 rows={elements}
                 columns={getColumns(elements)}
-                getRowId={(row) => row.id}
-                onRowClick={(params) => {router.push(getDetailRoute(params.row));}}
-                paginationMode="server"
+                getRowId={(row: LessPokemonDetail | ItemDetails) => row.id}
+                onRowClick={(params) => {router.push(getDetailRoute(params.row as LessPokemonDetail | ItemDetails));}} paginationMode="server"
                 paginationModel={paginationModel}
                 onPaginationModelChange={onPaginationModelChange}
                 paginationMeta={{hasNextPage}}

@@ -4,12 +4,12 @@ import React, {useEffect, useRef, useState} from "react";
 import { Button } from "@mui/material";
 import DisplayList from "@/app/_components/DisplayList";
 import DisplayGrid from "@/app/_components/DisplayGrid";
-import {itemDetails} from "@/app/_services/customTypes/SingleItemInfo";
+import {ItemDetails} from "@/app/_utils/SingleItemInfo";
 import {getAllDetailedItemList} from "@/app/_services/ItemApi";
 import SearchBar from "@/app/_components/SearchBar";
 
 const PokemonItems = () => {
-    const [item, setItem] = useState<itemDetails[]>([]);
+    const [item, setItem] = useState<ItemDetails[]>([]);
     const [paginationModel, setPaginationModel] = useState({
         page: 0,
         pageSize: 5,
@@ -17,8 +17,8 @@ const PokemonItems = () => {
     const [hasNextPage, setHasNextPage] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [isGridView, setIsGridView] = useState(true);
-    const [allItem, setAllItem] = useState<itemDetails[]>([]);
-    const allBerryRef = useRef<itemDetails[] | null>(null);
+    const [allItem, setAllItem] = useState<ItemDetails[]>([]);
+    const allBerryRef = useRef<ItemDetails[] | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,7 +37,7 @@ const PokemonItems = () => {
                     setHasNextPage(data.length === limit);
                 }
             } catch (error) {
-                console.error(error);
+                //TODO toast must be implemented
             } finally {
                 setIsLoading(false);
             }
@@ -47,10 +47,10 @@ const PokemonItems = () => {
     }, [paginationModel]);
 
     useEffect(() => {
-        const prefetchAllBerry = async () => {
+        const prefetchAllItem = async () => {
             const chunkSize = 100;
             const total = 2200;
-            const all: itemDetails[] = [];
+            const all: ItemDetails[] = [];
 
             for (let offset = 0; offset < total; offset += chunkSize) {
                 try {
@@ -66,7 +66,7 @@ const PokemonItems = () => {
             }
         };
 
-        prefetchAllBerry();
+        prefetchAllItem();
     }, []);
 
     return (

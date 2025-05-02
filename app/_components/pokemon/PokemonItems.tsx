@@ -3,7 +3,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Button, Grid} from "@mui/material";
 import {getLessDetailedPokemonList} from "@/app/_services/pokemonApi";
-import { lessPokemonDetail } from "@/app/_services/customTypes/SinglePokemonInfo";
+import { LessPokemonDetail } from "@/app/_utils/SinglePokemonInfo";
 import DisplayList from "@/app/_components/DisplayList";
 import DisplayGrid from "@/app/_components/DisplayGrid";
 import SearchBar from "@/app/_components/SearchBar";
@@ -11,7 +11,7 @@ import {getTypeList} from "@/app/_services/typeApi";
 import FilterSelect from "@/app/_components/FilterSelect";
 
 const PokemonItems = () => {
-    const [pokemon, setPokemon] = useState<lessPokemonDetail[]>([]);
+    const [pokemon, setPokemon] = useState<LessPokemonDetail[]>([]);
     const [paginationModel, setPaginationModel] = useState({
         page: 0,
         pageSize: 5,
@@ -20,9 +20,9 @@ const PokemonItems = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isGridView, setIsGridView] = useState(true);
 
-    const [filteredPokemon, setFilteredPokemon] = useState<lessPokemonDetail[]>([]);
-    const allPokemonRef = useRef<lessPokemonDetail[]>([]);
-    const [activePokemon, setActivePokemon] = useState<lessPokemonDetail[]>([]);
+    const [filteredPokemon, setFilteredPokemon] = useState<LessPokemonDetail[]>([]);
+    const allPokemonRef = useRef<LessPokemonDetail[]>([]);
+    const [activePokemon, setActivePokemon] = useState<LessPokemonDetail[]>([]);
 
     const [selectedType, setSelectedType] = useState('');
 
@@ -52,7 +52,7 @@ const PokemonItems = () => {
                     setHasNextPage(fallbackData.length === limit);
                 }
             } catch (error) {
-                console.error(error);
+                //TODO must be toast implemented
             } finally {
                 setIsLoading(false);
             }
@@ -65,7 +65,7 @@ const PokemonItems = () => {
         const prefetchAllPokemon = async () => {
             const chunkSize = 100;
             const total = 1500;
-            const all: lessPokemonDetail[] = [];
+            const all: LessPokemonDetail[] = [];
 
             for (let offset = 0; offset < total; offset += chunkSize) {
                 try {
@@ -75,7 +75,7 @@ const PokemonItems = () => {
                     setFilteredPokemon(all);
                     setActivePokemon(all);
                 } catch (e) {
-                    console.error(`Error in the chunk ${offset}`, e);
+                    //TODO must be toast implemented
                     break;
                 }
                 await new Promise((r) => setTimeout(r, 50));

@@ -1,9 +1,9 @@
 'use client';
 import React, {useEffect, useState} from 'react';
 import {
-    allPokemonDetail,
-    pokemonEncounter
-} from "@/app/_services/customTypes/SinglePokemonInfo";
+    AllPokemonDetail,
+    PokemonEncounter
+} from "@/app/_utils/SinglePokemonInfo";
 import {
     Button,
     List, ListItem, ListItemText,
@@ -18,17 +18,17 @@ import {getPokemonEncounter} from "@/app/_services/pokemonApi";
 import Typography from "@mui/material/Typography";
 
 interface Props {
-    selectedPokemon: allPokemonDetail[];
+    selectedPokemon: AllPokemonDetail[];
     onRemove: (name: string) => void;
 }
 
 const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) => {
     if (selectedPokemon.length === 0) return null;
-    const [encounterData, setEncounterData] = useState<Map<string, pokemonEncounter[]>>(new Map());
+    const [encounterData, setEncounterData] = useState<Map<string, PokemonEncounter[]>>(new Map());
 
     useEffect(() => {
         const fetchData = async () => {
-            const newEncounterData = new Map<string, pokemonEncounter[]>();
+            const newEncounterData = new Map<string, PokemonEncounter[]>();
             for (const pokemon of selectedPokemon) {
                 const result= await getPokemonEncounter(pokemon.location_area_encounters)
                 newEncounterData.set(pokemon.name, result.data);
@@ -39,26 +39,26 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
         fetchData();
     }, [selectedPokemon]);
     const rows = [
-        { label: "Name", getValue: (p: allPokemonDetail) => p.name },
-        { label: "Height", getValue: (p: allPokemonDetail) => p.height },
-        { label: "Weight", getValue: (p: allPokemonDetail) => p.weight },
+        { label: "Name", getValue: (p: AllPokemonDetail) => p.name },
+        { label: "Height", getValue: (p: AllPokemonDetail) => p.height },
+        { label: "Weight", getValue: (p: AllPokemonDetail) => p.weight },
         {
             label: "Types",
-            getValue: (p: allPokemonDetail) =>
+            getValue: (p: AllPokemonDetail) =>
                 p.types.map((t) => t.type.name).join(", "),
         },
         {
             label: "Abilities",
-            getValue: (p: allPokemonDetail) =>
+            getValue: (p: AllPokemonDetail) =>
                 p.abilities.map((a) => a.ability.name).join(", "),
         },
         {
             label: "Base Experience",
-            getValue: (p: allPokemonDetail) => p.base_experience,
+            getValue: (p: AllPokemonDetail) => p.base_experience,
         },
         {
             label: "Stats",
-            getValue: (p: allPokemonDetail) => (
+            getValue: (p: AllPokemonDetail) => (
                 <List dense>
                     {p.stats.map((s) => (
                         <ListItem key={s.stat.name} disablePadding>
@@ -76,7 +76,7 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
         },
         {
             label: "Location Encounters",
-            getValue: (p: allPokemonDetail) => {
+            getValue: (p: AllPokemonDetail) => {
                 const pokemonEncounters = encounterData.get(p.name)
                 if (!pokemonEncounters) return null;
                 return (<List dense>
@@ -109,7 +109,7 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
         },
         {
             label: "Voice",
-            getValue: (p: allPokemonDetail) => (
+            getValue: (p: AllPokemonDetail) => (
                 <Button
                     variant="contained"
                     size="small"
