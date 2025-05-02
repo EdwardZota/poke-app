@@ -5,8 +5,10 @@ import { Button } from "@mui/material";
 import DisplayList from "@/app/_components/DisplayList";
 import DisplayGrid from "@/app/_components/DisplayGrid";
 import {ItemDetails} from "@/app/_utils/SingleItemInfo";
-import {getAllDetailedItemList} from "@/app/_services/ItemApi";
+import {getAllDetailedItemList} from "@/app/_services/itemApi";
 import SearchBar from "@/app/_components/SearchBar";
+import {toast} from "react-toastify";
+import {AxiosError} from "axios";
 
 const PokemonItems = () => {
     const [item, setItem] = useState<ItemDetails[]>([]);
@@ -37,7 +39,7 @@ const PokemonItems = () => {
                     setHasNextPage(data.length === limit);
                 }
             } catch (error) {
-                //TODO toast must be implemented
+                toast.error(error instanceof Error);
             } finally {
                 setIsLoading(false);
             }
@@ -58,8 +60,10 @@ const PokemonItems = () => {
                     all.push(...chunk);
                     allBerryRef.current = [...all];
                     setAllItem(all)
-                } catch (e) {
-                    console.error(`Error in the  chunk ${offset}`, e);
+                } catch (error) {
+                    if (error instanceof AxiosError) {
+                        toast.error(`Axios error: ${error.response?.data?.message ?? error.message ?? 'Unknown error'}`);
+                    }
                     break;
                 }
                 await new Promise((r) => setTimeout(r, 50));

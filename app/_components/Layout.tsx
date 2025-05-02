@@ -15,10 +15,10 @@ export default function Layout({children}: LayoutProps) {
     useEffect(() => {
         const storedMode = localStorage.getItem("themeMode");
         if (storedMode !== null) {
-            const parsed = JSON.parse(storedMode);
-            if (typeof parsed === 'boolean') {
+            try {
+                const parsed = JSON.parse(storedMode) as boolean;
                 setMode(parsed);
-            } else {
+            } catch {
                 setMode(false);
             }
         } else {
