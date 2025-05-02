@@ -7,7 +7,6 @@ import DisplayGrid from "@/app/_components/DisplayGrid";
 import {ItemDetails} from "@/app/_utils/SingleItemInfo";
 import {getAllDetailedItemList} from "@/app/_services/itemApi";
 import SearchBar from "@/app/_components/SearchBar";
-import FilterSelect from "@/app/_components/FilterSelect";
 import {toast} from "react-toastify";
 import {AxiosError} from "axios";
 

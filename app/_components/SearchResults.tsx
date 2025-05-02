@@ -31,7 +31,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({results,typology,onSelectE
                                 <CardMedia
                                     component="img"
                                     src={(result as LessPokemonDetail).sprites.other.dream_world?.front_default}
-                                    onError={() => {}}
                                     sx={{
                                         height: "4rem",
                                         width: "4rem",
@@ -60,7 +59,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({results,typology,onSelectE
                                             ? (result as ItemDetails).sprites?.default || missingNo.src
                                             : (result as LessPokemonDetail).sprites.other.dream_world?.front_default || missingNo.src
                                     }
-                                    onError={() => {}}
                                     sx={{
                                         height: "4rem",
                                         width: "4rem",
