@@ -30,7 +30,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({results,typology,onSelectE
                             <Box key={result.name} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                 <CardMedia
                                     component="img"
-                                    src={(result as LessPokemonDetail).sprites.other.dream_world?.front_default}
+                                    src={(result as LessPokemonDetail).sprites.other.dream_world?.front_default || missingNo.src}
                                     sx={{
                                         height: "4rem",
                                         width: "4rem",

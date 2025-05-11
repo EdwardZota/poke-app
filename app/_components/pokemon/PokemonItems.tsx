@@ -96,7 +96,6 @@ const PokemonItems = () => {
             const types = await getTypeList();
             setTypeOptions(types);
         };
-
         fetchFilters();
     }, []);
 

@@ -1,87 +1,135 @@
 'use client';
 
 import {
-    Typography,
-    Grid,
+    Typography, Box, CardMedia, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody,
 } from '@mui/material';
-import {ItemDetails} from "@/app/_utils/SingleItemInfo";
-import React from 'react';
+import { ItemDetails } from "@/app/_utils/SingleItemInfo";
+import React from "react";
 
 interface Props {
     item: ItemDetails;
 }
 
-export default function ItemDetail({item}: Props) {
+export default function ItemDetail({ item }: Props) {
     const englishEffect = item.effect_entries.find(e => e.language.name === 'en');
     const englishFlavor = item.flavor_text_entries.find(f => f.language.name === 'en');
+    const staticFields = [
+        { label: "Id", value: item.id },
+        { label: "Cost", value: item.cost },
+        { label: "Fling power", value: item.fling_power },
+        { label: "Category", value: item.category.name },
+    ];
 
     return (
-        <div className="max-w-4xl mx-auto p-6 mt-10">
-            <Typography variant="h3" component="h1"
-                        className="text-center capitalize font-bold mb-6">
-                {item.name}
-            </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Box sx={{
+                display: "flex", flexDirection: "row",
+                marginTop: "2rem",
+                textTransform: "capitalize",
+                alignItems: "center"
+            }}>
+                <Typography variant="h3" component="h1">
+                    {item.name}
+                </Typography>
 
-            <div className="flex justify-center mb-6">
-                <img
-                    src={item.sprites.default}
-                    alt={item.name}
-                    className="h-40"
-                />
-            </div>
+                <Box sx={{ display: "flex", paddingLeft: "2rem" }}>
+                    <CardMedia
+                        component="img"
+                        image={item.sprites.default}
+                        alt={item.name}
+                        sx={{ objectFit: 'contain', height: '5rem', width: "5rem" }}
+                    />
+                </Box>
+            </Box>
 
-            <Grid container spacing={4}>
-                <div>
-                    <Typography variant="body1" className="font-semibold">
-                        ID: <span className="font-normal">{item.id}</span>
-                    </Typography>
-                    <Typography variant="body1" className="font-semibold">
-                        Cost: <span className="font-normal">{item.cost}</span>
-                    </Typography>
-                    <Typography variant="body1" className="font-semibold">
-                        Fling Power: <span
-                        className="font-normal">{item.fling_power}</span>
-                    </Typography>
-                    <Typography variant="body1" className="font-semibold">
-                        Category: <span
-                        className="font-normal">{item.category.name}</span>
-                    </Typography>
-                    <Typography variant="body1" className="font-semibold">
-                        Attributes: <span className="font-normal">
-                        {item.attributes.map(attr => attr.name).join(', ')}
-                    </span>
-                    </Typography>
-                </div>
+            <Box>
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", py: "3rem" }}>
+                    <TableContainer sx={{ width: "40rem" }} component={Paper}>
+                        <Table>
+                            <TableHead sx={{ backgroundColor: "lightgrey" }}>
+                                <TableRow>
+                                    <TableCell sx={{ width: "7.5rem" }}>Stat Name</TableCell>
+                                    <TableCell sx={{ width: "5rem" }} align="center">Base Value</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {staticFields.map((field, idx) => (
+                                    <TableRow key={`static-${idx}`}>
+                                        <TableCell sx={{ textTransform: "capitalize" }}>{field.label}</TableCell>
+                                        <TableCell align="center" sx={{ textTransform: "capitalize" }}>
+                                            {field.value}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Box>
+                <Box sx={{pl: "5rem"}}>
+                    <Box sx={{ paddingTop: "2rem" }}>
+                        <Typography variant="h4" sx={{ mb: 2 }}>
+                            Attributes
+                        </Typography>
+                        <Box sx={{ mb: 3 }}>
+                            <ul style={{ paddingLeft: '2rem', fontSize: '1.25em', listStyleType: 'disc', margin: 0 }}>
+                                {item.attributes.map(attr => (
+                                    <li key={attr.name}>
+                                        {attr.name
+                                            .split(' ')
+                                            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                                            .join('')}
+                                    </li>
+                                ))}
+                            </ul>
+                        </Box>
+                    </Box>
 
-                <div>
-                    {englishEffect && (
-                        <>
-                            <Typography variant="h6"
-                                        className="font-semibold mt-4">Effect</Typography>
-                            <Typography
-                                variant="body1">{englishEffect.effect}</Typography>
-                        </>
+                    <Box sx={{ paddingTop: "2rem" }}>
+                        <Typography variant="h4" sx={{ mb: 2 }}>
+                            Effect
+                        </Typography>
+                        <Box sx={{ mb: 3, ml: 2 }}>
+                            {englishEffect && (
+                                <>
+                                    <Typography sx={{ fontSize: '1.25em' }} variant="body1">
+                                        {englishEffect.effect}
+                                    </Typography>
+                                </>
+                            )}
+                        </Box>
+                    </Box>
+
+                    <Box sx={{ paddingTop: "2rem" }}>
+                        <Typography variant="h4" sx={{ mb: 2 }}>
+                            Flavor
+                        </Typography>
+                        <Box sx={{ mb: 3, ml: 2 }}>
+                            {englishFlavor && (
+                                <>
+                                    <Typography sx={{ fontSize: '1.25em' }} variant="body1">
+                                        {englishFlavor.text}
+                                    </Typography>
+                                </>
+                            )}
+                        </Box>
+                    </Box>
+
+                    {item.held_by_pokemon && item.held_by_pokemon.length > 0 && (
+                        <Box sx={{ paddingTop: "2rem" }}>
+                            <Typography variant="h4" sx={{ mb: 2 }}>
+                                Held by Pokémon
+                            </Typography>
+                            <Box sx={{ mb: 3, ml: 2 }}>
+                                {englishFlavor && (
+                                    <Typography variant="body1">
+                                        {item.held_by_pokemon.map(p => p.pokemon.name).join(', ')}
+                                    </Typography>
+                                )}
+                            </Box>
+                        </Box>
                     )}
-
-                    {englishFlavor && (
-                        <>
-                            <Typography variant="h6"
-                                        className="font-semibold mt-4">Flavor
-                                Text</Typography>
-                            <Typography
-                                variant="body1">{englishFlavor.text}</Typography>
-                        </>
-                    )}
-
-                    <Typography variant="h6" className="font-semibold mt-4">Held
-                        by Pokémon</Typography>
-                    <Typography variant="body1">
-                        {item.held_by_pokemon.length > 0
-                            ? item.held_by_pokemon.map(p => p.pokemon.name).join(', ')
-                            : 'None'}
-                    </Typography>
-                </div>
-            </Grid>
-        </div>
+                </Box>
+            </Box>
+        </Box>
     );
 }

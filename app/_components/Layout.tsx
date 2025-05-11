@@ -9,6 +9,7 @@ import FooterNavbar from "@/app/_components/footer/FooterNavbar";
 interface LayoutProps {
     children: ReactNode;
 }
+
 export default function Layout({children}: LayoutProps) {
     const [mode, setMode] = useState<boolean | null>(null);
 
@@ -38,6 +39,18 @@ export default function Layout({children}: LayoutProps) {
     const appTheme = createTheme({
         palette: {
             mode: mode ? "dark" : "light",
+        },
+        typography: {
+            allVariants: mode
+                ? {
+                    color: "white",
+                    textShadow: `
+                -1px -1px 0 black,
+                 1px -1px 0 black,
+                -1px  1px 0 black,
+                 1px  1px 0 black`,
+                }
+                : {},
         },
     });
 

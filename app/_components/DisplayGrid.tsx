@@ -59,7 +59,6 @@ const DisplayGrid = ({
         return !!el && typeof el === "object" && "cost" in el;
     }
 
-
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-4">
