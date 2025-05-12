@@ -1,12 +1,12 @@
 "use client";
 
 import React, {useEffect, useRef, useState} from "react";
-import {Box, Button, Grid} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import {getLessDetailedPokemonList} from "@/app/_services/pokemonApi";
 import { LessPokemonDetail } from "@/app/_utils/SinglePokemonInfo";
 import DisplayList from "@/app/_components/DisplayList";
 import DisplayGrid from "@/app/_components/DisplayGrid";
-import SearchBar from "@/app/_components/SearchBar";
+import SearchBar from "@/app/_components/searchbar/SearchBar";
 import {getTypeList} from "@/app/_services/typeApi";
 import FilterSelect from "@/app/_components/FilterSelect";
 import {toast} from "react-toastify";

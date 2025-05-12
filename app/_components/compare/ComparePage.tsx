@@ -1,7 +1,7 @@
 'use client';
 import React, {useEffect, useState} from "react";
 import {AllPokemonDetail} from "@/app/_utils/SinglePokemonInfo";
-import SearchBar from "@/app/_components/SearchBar";
+import SearchBar from "@/app/_components/searchbar/SearchBar";
 import {getAllDetailedPokemonList} from "@/app/_services/pokemonApi";
 import PokemonComparisonTable
     from "@/app/_components/compare/PokemonComparisonTable";

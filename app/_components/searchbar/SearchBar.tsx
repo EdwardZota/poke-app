@@ -4,7 +4,7 @@ import {
     AllPokemonDetail,
     LessPokemonDetail
 } from "@/app/_utils/SinglePokemonInfo";
-import SearchResults from "@/app/_components/SearchResults";
+import SearchResults from "@/app/_components/searchbar/SearchResults";
 import { ItemDetails } from "@/app/_utils/SingleItemInfo";
 
 interface SearchBarProps {

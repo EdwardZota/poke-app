@@ -5,6 +5,7 @@ import {
     Grid,
 } from '@mui/material';
 import {ItemDetails} from "@/app/_utils/SingleItemInfo";
+import React from 'react';
 
 interface Props {
     item: ItemDetails;

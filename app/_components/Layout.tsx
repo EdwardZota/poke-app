@@ -3,7 +3,7 @@
 import React, {ReactNode, useEffect, useState} from "react";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import Navbar from "@/app/_components/header/Header";
+import Navbar from "@/app/_components/header/Navbar";
 import FooterNavbar from "@/app/_components/footer/FooterNavbar";
 
 interface LayoutProps {
