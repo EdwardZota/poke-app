@@ -113,7 +113,7 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
                 <Button
                     variant="contained"
                     size="small"
-                    onClick={() => {new Audio(p.cries.latest).play();}}
+                    onClick={() => {new Audio(p.cries.latest).play()}}
                 >
                     Play Voice
                 </Button>

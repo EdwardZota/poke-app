@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { AbilityInfo, LessPokemonDetail } from "@/app/_utils/SinglePokemonInfo";
 import Link from "next/link";
-import {Box, Card, CardMedia, Typography} from "@mui/material";
+import { Box, Card, CardMedia, Typography } from "@mui/material";
 import grassImg from "@/app/_pictures/pokemonCardTemplate/grass.png";
 import fireImg from "@/app/_pictures/pokemonCardTemplate/fire.png";
 import normalImg from "@/app/_pictures/pokemonCardTemplate/normal.png";
 import darknessImg from "@/app/_pictures/pokemonCardTemplate/darkness.png";
 import dragonImg from "@/app/_pictures/pokemonCardTemplate/dragon.png";
-import fairyImg from "@/app/_pictures/pokemonCardTemplate/fairy.png"
-import fightingImg from "@/app/_pictures/pokemonCardTemplate/fighting.png"
-import lightningImg from "@/app/_pictures/pokemonCardTemplate/lightning.png"
-import psychicImg from "@/app/_pictures/pokemonCardTemplate/psychic.png"
-import steelImg from "@/app/_pictures/pokemonCardTemplate/steel.png"
-import waterImg from "@/app/_pictures/pokemonCardTemplate/water.png"
-import defaultImg from "@/app/_pictures/pokemonCardTemplate/blank.png"
-import {getAbilityInfo} from "@/app/_services/pokemonApi";
-import backgroundImage from "@/app/_pictures/pokemonCardTemplate/backgroundImage.jpg"
-import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png"
-import {StaticImageData} from "next/image";
+import fairyImg from "@/app/_pictures/pokemonCardTemplate/fairy.png";
+import fightingImg from "@/app/_pictures/pokemonCardTemplate/fighting.png";
+import lightningImg from "@/app/_pictures/pokemonCardTemplate/lightning.png";
+import psychicImg from "@/app/_pictures/pokemonCardTemplate/psychic.png";
+import steelImg from "@/app/_pictures/pokemonCardTemplate/steel.png";
+import waterImg from "@/app/_pictures/pokemonCardTemplate/water.png";
+import defaultImg from "@/app/_pictures/pokemonCardTemplate/blank.png";
+import { getAbilityInfo } from "@/app/_services/pokemonApi";
+import backgroundImage from "@/app/_pictures/pokemonCardTemplate/backgroundImage.jpg";
+import missingNo from "@/app/_pictures/pokemonCardTemplate/missingNo.png";
+import { StaticImageData } from "next/image";
 
 interface Props {
     pokemon: LessPokemonDetail;
 }
 
-const PokemonCard = ({pokemon}: Props) => {
-
+const PokemonCard = ({ pokemon }: Props) => {
     const primaryType = pokemon.types[0].type.name;
     const typesImage: Record<string, StaticImageData> = {
         normal: normalImg,
@@ -69,12 +68,8 @@ const PokemonCard = ({pokemon}: Props) => {
         return parseInt(parts[parts.length - 1]);
     }
 
-    function toPascalCase(str: string) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
     return (
-        <Link href={`/pokemon/${pokemon.name}`} style={{textDecoration: "none"}}>
+        <Link href={`/pokemon/${pokemon.name}`} style={{ textDecoration: "none" }}>
             <Card
                 sx={{
                     backgroundImage: `url(${typeImage.src ?? ''})`,
@@ -97,15 +92,15 @@ const PokemonCard = ({pokemon}: Props) => {
                 >
                     <Typography
                         sx={{
-                            fontSize: "1.2rem",
-                            fontWeight: "bold",
+                            fontSize: "1.2rem", fontWeight: "bold",
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             maxWidth: "10rem",
+                            textTransform: "uppercase",
                         }}
-                    >{toPascalCase(pokemon.name)}</Typography>
-                    <Box sx={{display: "flex", flexDirection: "row"}}>
+                    >{pokemon.name}</Typography>
+                    <Box sx={{ display: "flex", flexDirection: "row" }}>
                         <Typography
                             sx={{
                                 fontSize: "0.7rem",
@@ -114,7 +109,7 @@ const PokemonCard = ({pokemon}: Props) => {
                                 paddingRight: "0.1rem",
                             }}
                         >HP</Typography>
-                        <Typography sx={{fontSize: "1.2rem", paddingTop: "0.15rem", fontWeight: "bold"}}>
+                        <Typography sx={{ fontSize: "1.2rem", paddingTop: "0.15rem", fontWeight: "bold" }}>
                             {pokemon.stats[0].base_stat}
                         </Typography>
                     </Box>
@@ -122,16 +117,11 @@ const PokemonCard = ({pokemon}: Props) => {
 
                 <Box
                     sx={{
-                        height: "13.75rem",
-                        width: "auto",
-                        marginLeft: "2.2rem",
-                        marginRight: "2.1rem",
-                        marginTop: "0.4rem",
-                        marginBottom: "1rem",
+                        height: "13.75rem", width: "auto",
+                        marginLeft: "2.2rem", marginRight: "2.1rem",
+                        marginTop: "0.4rem", marginBottom: "1rem",
                         backgroundImage: `url(${backgroundImage.src})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat",
                         borderRadius: "0.1rem",
                         overflow: "hidden",
                     }}
@@ -149,7 +139,6 @@ const PokemonCard = ({pokemon}: Props) => {
                     />
                 </Box>
 
-
                 <Box
                     sx={{
                         height: "11.25rem",
@@ -160,39 +149,35 @@ const PokemonCard = ({pokemon}: Props) => {
                         scrollbarColor: "#ffffff transparent",
                     }}
                 >
-                    {abilitiesInfo.map((ability, index) => (
-                        <Box key={index} sx={{paddingLeft: "2.5rem", paddingRight: "2.5rem", paddingTop: "0.5rem"}}>
-                            <Typography sx={{fontSize: "1rem"}} variant="body1" fontWeight="bold">
-                                {toPascalCase(ability.name)}
-                            </Typography>
-                            <Typography sx={{fontSize: "0.9rem"}} variant="body2">
-                                {ability.effect_entries[0].short_effect}
-                            </Typography>
-                        </Box>
-                    ))}
+                    {abilitiesInfo.map((ability, index) => {
+                        const englishEntry = ability.effect_entries.find(
+                            (entry) => entry.language.name === "en"
+                        );
+                        return (
+                            <Box
+                                key={index}
+                                sx={{ paddingLeft: "2.5rem", paddingRight: "2.5rem", paddingTop: "0.5rem" }}
+                            >
+                                <Typography sx={{ fontSize: "1rem", textTransform: "capitalize" }} variant="body1" fontWeight="bold">
+                                    {ability.name}
+                                </Typography>
+                                <Typography sx={{ fontSize: "0.9rem" }} variant="body2">
+                                    {englishEntry ? englishEntry.short_effect : "No English description available."}
+                                </Typography>
+                            </Box>
+                        );
+                    })}
                 </Box>
 
-                {pokemon.id >= 1000 ? (
-                    <Box sx={{
-                        height: "3rem",
-                        width: "10rem",
-                        marginLeft: "12.75rem",
-                        marginTop: "0.8rem",
-                        fontWeight: "bold"
-                    }}>
-                        Pokédex ID: {pokemon.id}
-                    </Box>
-                ) : (
-                    <Box sx={{
-                        height: "3rem",
-                        width: "10rem",
-                        marginLeft: "13.5rem",
-                        marginTop: "0.8rem",
-                        fontWeight: "bold"
-                    }}>
-                        Pokédex ID: {pokemon.id}
-                    </Box>
-                )}
+                <Box sx={{
+                    height: "3rem",
+                    width: "10rem",
+                    marginLeft: pokemon.id >= 1000 ? "12.75rem" : "13.5rem",
+                    marginTop: "0.8rem",
+                    fontWeight: "bold"
+                }}>
+                    Pokédex ID: {pokemon.id}
+                </Box>
             </Card>
         </Link>
     );

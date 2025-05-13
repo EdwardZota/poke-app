@@ -28,12 +28,14 @@ const FilterSelect: React.FC<FilterSelectProps> = ({ label, options, value, onCh
                         },
                         PaperProps: {
                             sx: {
-                                maxWidth: '5rem',
+                                minWidth: '10rem',
+                                maxWidth: '15rem',
                                 maxHeight: '21rem',
                                 overflowY: 'auto',
                                 overflowX: 'hidden',
                             },
                         },
+
                         MenuListProps: {
                             sx: {
                                 display: 'flex',

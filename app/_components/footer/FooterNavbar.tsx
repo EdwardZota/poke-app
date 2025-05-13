@@ -26,7 +26,7 @@ function FooterNavbar() {
                                     fontWeight: 600
                                 }}
                             >
-                                Impressum
+                                Legal notice
                             </Button>
                         </Link>
                     </Box>
