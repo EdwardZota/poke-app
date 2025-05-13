@@ -59,12 +59,12 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
         {
             label: "Stats",
             getValue: (p: AllPokemonDetail) => (
-                <List dense>
+                <List dense sx={{ textAlign: 'center' }}>
                     {p.stats.map((s) => (
-                        <ListItem key={s.stat.name} disablePadding>
+                        <ListItem key={s.stat.name} disablePadding sx={{ justifyContent: 'center' }}>
                             <ListItemText
                                 primary={
-                                    <Typography variant="body2">
+                                    <Typography variant="body2" align="center">
                                         <strong className="capitalize">{s.stat.name}</strong>: {s.base_stat}
                                     </Typography>
                                 }
@@ -79,12 +79,12 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
             getValue: (p: AllPokemonDetail) => {
                 const pokemonEncounters = encounterData.get(p.name)
                 if (!pokemonEncounters) return null;
-                return (<List dense>
+                return (<List dense sx={{ textAlign: 'center' }}>
                         {pokemonEncounters.map((encounter, index) => (
-                            <ListItem key={index} alignItems="flex-start" divider>
+                            <ListItem key={index} alignItems="flex-start" divider sx={{ flexDirection: 'column', alignItems: 'center' }}>
                                 <ListItemText
                                     primary={
-                                        <Typography variant="subtitle2" fontWeight="bold">
+                                        <Typography variant="subtitle2" fontWeight="bold" align="center">
                                             Location: {encounter.location_area.name}
                                         </Typography>
                                     }
@@ -94,7 +94,8 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
                                                 key={idx}
                                                 variant="body2"
                                                 color="textSecondary"
-                                                sx={{ display: "block", ml: 1 }}
+                                                align="center"
+                                                sx={{ display: "block", ml: 0 }}
                                             >
                                                 Version: <strong>{version.version.name}</strong>, Max Chance: <strong>{version.max_chance}</strong>
                                             </Typography>
@@ -127,7 +128,9 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
                 <TableRow>
                     <TableCell className="font-bold" align={"center"} sx={{ verticalAlign: "top" }}>Attribute</TableCell>
                     {selectedPokemon.map((p) => (
-                        <TableCell key={p.name}>
+                        <TableCell
+                            key={p.name}
+                            >
                             <div className="flex flex-col items-center">
                                 <Button
                                     onClick={() => onRemove(p.name)}
@@ -148,11 +151,30 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
             <TableBody>
                 {rows.map((row) => (
                     <TableRow key={row.label}>
-                        <TableCell className="font-semibold" align={"center"} sx={{ verticalAlign: "top" }}>{row.label}</TableCell>
+                        <TableCell
+                            align="center"
+                            sx={{
+                                verticalAlign: "top",
+                                backgroundColor: "lightgrey",
+                                fontWeight: "bold",
+                                width: "12rem"
+                            }}
+                        >
+                            {row.label}
+                        </TableCell>
                         {selectedPokemon.map((p) => (
-                            <TableCell key={p.name + "-" + row.label}>
+                            <TableCell
+                                key={`${p.name}-${row.label}`}
+                                align="center"
+                                sx={{
+                                    verticalAlign: "top",
+                                    borderLeft: "2px solid #ddd",
+                                    textAlign: "center", // ← das ist entscheidend
+                                }}
+                            >
                                 {row.getValue(p)}
                             </TableCell>
+
                         ))}
                     </TableRow>
                 ))}

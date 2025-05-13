@@ -5,7 +5,7 @@ import SearchBar from "@/app/_components/searchbar/SearchBar";
 import {getAllDetailedPokemonList} from "@/app/_services/pokemonApi";
 import PokemonComparisonTable
     from "@/app/_components/compare/PokemonComparisonTable";
-import {Typography} from "@mui/material";
+import {Box, Typography, Paper} from "@mui/material";
 import {toast} from "react-toastify";
 import {AxiosError} from "axios";
 
