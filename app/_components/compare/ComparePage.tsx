@@ -5,7 +5,7 @@ import SearchBar from "@/app/_components/searchbar/SearchBar";
 import {getAllDetailedPokemonList} from "@/app/_services/pokemonApi";
 import PokemonComparisonTable
     from "@/app/_components/compare/PokemonComparisonTable";
-import {Typography} from "@mui/material";
+import {Box, Typography, Paper} from "@mui/material";
 import {toast} from "react-toastify";
 import {AxiosError} from "axios";
 
@@ -49,20 +49,29 @@ export default function ComparePage() {
 
     return (
         <div className="p-4">
-            <Typography sx={{ fontSize: "3rem", fontWeight: "bold" }}>
-                Compare Page
-            </Typography>
             <SearchBar
                 allElements={allPokemonList}
                 typology="pokemon-compare"
                 onSelectElement={handleSelect}
             />
-            <div className="mt-6 overflow-x-auto">
-                <PokemonComparisonTable
-                    selectedPokemon={selectedPokemon}
-                    onRemove={handleRemove}
-                />
-            </div>
+            {selectedPokemon.length === 0 ? (
+                <Box sx={{ mt: 6, textAlign: 'center' }}>
+                    <Typography variant="h6" fontWeight="bold">
+                        No Pokémon selected
+                    </Typography>
+                    <Typography variant="body2" sx={{ mt: 1 }}>
+                        Use the search bar above to add up to 4 Pokémon.
+                    </Typography>
+                </Box>
+            ) : (
+                <div className="mt-6 overflow-x-auto">
+                    <PokemonComparisonTable
+                        selectedPokemon={selectedPokemon}
+                        onRemove={handleRemove}
+                    />
+                </div>
+            )}
+
         </div>
     );
 }
