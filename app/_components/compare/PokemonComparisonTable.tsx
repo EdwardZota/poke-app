@@ -126,7 +126,7 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell className="font-bold" align={"center"} sx={{ verticalAlign: "top" }}>Attribute</TableCell>
+                    <TableCell></TableCell>
                     {selectedPokemon.map((p) => (
                         <TableCell
                             key={p.name}
@@ -134,14 +134,28 @@ const PokemonComparisonTable: React.FC<Props> = ({ selectedPokemon, onRemove }) 
                             <div className="flex flex-col items-center">
                                 <Button
                                     onClick={() => onRemove(p.name)}
+                                    variant="contained"
                                     color="error"
-                                    size="small"
+                                    sx={{
+                                        borderRadius: '12px',
+                                        textTransform: 'none',
+                                        paddingX: 2,
+                                        paddingY: 0.5,
+                                        boxShadow: 2,
+                                        fontSize: '1rem',
+                                    }}
                                 >
                                     Remove
                                 </Button>
-                                <span className="capitalize font-semibold">{p.name}</span>
+                                <Typography
+                                    variant="subtitle1"
+                                    fontWeight="bold"
+                                    textTransform="capitalize"
+                                    sx={{ fontSize: '2rem' }}
+                                >
+                                    {p.name}
+                                </Typography>
                                 <PokemonCard key={p.name} pokemon={p}/>
-
                             </div>
                         </TableCell>
                     ))}
